@@ -1,0 +1,24 @@
+.preloader {
+    animation: pulse 1s infinite;
+    background: #537DB4;
+    color: white;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+}
+
+@keyframes pulse {
+    0% {
+        background-color: rgba(42, 65, 92, 0.5);
+        color: rgba(255, 255, 255, 0.5);
+    }
+    50% {
+        background-color: #537DB4;
+        color: white;
+    }
+    100% {
+        background-color: rgba(42, 65, 92, 0.5);
+        color: rgba(255, 255, 255, 0.5);
+    }
+}

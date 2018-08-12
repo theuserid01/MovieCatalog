@@ -1,0 +1,10 @@
+# My
+/local-storage
+
+# compiled output
+/dist
+/out-tsc
+/tmp
+
+# dependencies
+node_modules/
