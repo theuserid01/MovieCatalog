@@ -1,0 +1,104 @@
+<nav class="navbar navbar-expand-md navbar-dark">
+    <div class="container">
+        <a
+            routerLink="/"
+            class="navbar-brand"
+        >Movie Catalog</a>
+        <button
+            type="button"
+            class="navbar-toggler navbar-toggler-right"
+            aria-controls=".navbar-collapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            data-target=".navbar-collapse"
+            data-toggle="collapse"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a
+                        routerLink="/"
+                        class="nav-link dropdown-toggle"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        data-toggle="dropdown"
+                        role="button"
+                    >Movies</a>
+                    <div class="dropdown-menu">
+                        <a
+                            routerLink="/"
+                            class="dropdown-item"
+                        >All Movies</a>
+                        <a
+                            routerLink="/movies/create"
+                            class="dropdown-item"
+                        >Create Movie</a>
+                    </div>
+                </li>
+            </ul>
+            <ul
+                class="navbar-nav"
+                id="navbarSupportedContent"
+            >
+                <li class="nav-item dropdown">
+                    <a
+                        routerLink="/"
+                        class="nav-link dropdown-toggle"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        data-toggle="dropdown"
+                        role="button"
+                    >Admin</a>
+                    <div class="dropdown-menu">
+                        <a
+                            routerLink="/admin/users/all"
+                            class="dropdown-item"
+                        >All Users</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a
+                        routerLink="/"
+                        class="nav-link dropdown-toggle"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        data-toggle="dropdown"
+                        role="button"
+                    >My Profile</a>
+                    <div class="dropdown-menu">
+                        <a
+                            routerLink="/"
+                            class="dropdown-item"
+                        >Edit Details</a>
+                        <a
+                            routerLink="/"
+                            class="dropdown-item"
+                        >Edit Password</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a
+                        routerLink="/"
+                        class="nav-link"
+                    >Logout</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a
+                        routerLink="/users/login"
+                        class="nav-link"
+                    >Login</a>
+                </li>
+                <li class="nav-item">
+                    <a
+                        routerLink="/users/register"
+                        class="nav-link"
+                    >Register</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
