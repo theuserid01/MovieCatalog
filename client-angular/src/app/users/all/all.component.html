@@ -1,0 +1,75 @@
+<section>
+    <h1 class="text-center">Users</h1>
+    <form
+        class="col-4"
+        [formGroup]="searchForm"
+        (ngSubmit)="onSubmitHandler(searchForm.value)"
+    >
+        <div class="form-group">
+            <div class="input-group">
+                <input
+                    formControlName="search"
+                    type="text"
+                    class="form-control"
+                    aria-describedby="basic-addon2"
+                    aria-label="Search by Email OR Username"
+                    name="search"
+                    placeholder="Search by Email OR Username"
+                />
+                <div class="input-group-append">
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >Search</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <h3
+        *ngIf="!(users || []).length"
+        class="text-center"
+    >No users</h3>
+    <table
+        *ngIf="(users || []).length"
+        class="col-12 table table-bordered table-hover table-responsive table-sm table-striped"
+    >
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let u of users">
+                <td class="fit">{{u._id}}</td>
+                <td>{{u.username}}</td>
+                <td>{{u.email}}</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-xs d-flex">
+                        <a
+                            routerLink="/users/edit/details/{{u._id}}"
+                            class="btn btn-sm btn-info-b3 w-100"
+                            role="button"
+                        >Edit Details</a>
+                        <a
+                            routerLink="/users/edit/roles/{{u._id}}"
+                            class="btn btn-sm btn-warning-b3 w-100"
+                            role="button"
+                        >Edit Roles</a>
+                        <a
+                            routerLink="/users/delete/{{u._id}}"
+                            class="btn btn-sm btn-danger-b3 w-100"
+                            role="button"
+                        >Delete User</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <app-pagination
+        *ngIf="usersPagination"
+        [pagination]="usersPagination"
+    ></app-pagination>
+</section>

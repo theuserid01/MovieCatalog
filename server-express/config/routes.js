@@ -31,19 +31,19 @@ module.exports = (app) => {
 
     app.get(
         '/users/edit/details/:id',
-        auth.isAuthenticated,
+        // auth.isAuthenticated,
         usersController.actionEditDetailsGet
     )
     app.post(
         '/users/edit/details/:id',
-        auth.isAuthenticated,
+        // auth.isAuthenticated,
         auth.isValidUsername,
         auth.isValidEmail,
         usersController.actionEditDetailsPost
     )
     app.post(
         '/users/edit/password/:id',
-        auth.isAuthenticated,
+        // auth.isAuthenticated,
         usersController.actionEditPasswordPost
     )
     app.post(
@@ -62,28 +62,28 @@ module.exports = (app) => {
 
     // Admin users routes
     app.get(
-        '/admin/users/all',
-        auth.isInRole(constants.ADMINISTRATOR_ROLE),
+        '/users/all',
+        // auth.isInRole(constants.ADMINISTRATOR_ROLE),
         usersController.actionAll
     )
     app.get(
-        '/admin/users/delete/:id',
-        auth.isInRole(constants.ADMINISTRATOR_ROLE),
+        '/users/delete/:id',
+        // auth.isInRole(constants.ADMINISTRATOR_ROLE),
         usersController.actionDeleteGet
     )
     app.post(
-        '/admin/users/delete/:id',
-        auth.isInRole(constants.ADMINISTRATOR_ROLE),
+        '/users/delete/:id',
+        // auth.isInRole(constants.ADMINISTRATOR_ROLE),
         usersController.actionDeletePost
     )
     app.get(
-        '/admin/users/edit/roles/:id',
-        auth.isInRole(constants.ADMINISTRATOR_ROLE),
+        '/users/edit/roles/:id',
+        // auth.isInRole(constants.ADMINISTRATOR_ROLE),
         usersController.actionEditRolesGet
     )
     app.post(
-        '/admin/users/edit/roles/:id',
-        auth.isInRole(constants.ADMINISTRATOR_ROLE),
+        '/users/edit/roles/:id',
+        //auth.isInRole(constants.ADMINISTRATOR_ROLE),
         usersController.actionEditRolesPost
     )
 

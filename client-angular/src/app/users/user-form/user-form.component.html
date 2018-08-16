@@ -1,0 +1,174 @@
+<section class="d-flex flex-row justify-content-center">
+    <article class="col-4">
+        <h1 class="text-center">{{attr.title}}</h1>
+        <form
+            *ngIf="userForm"
+            [formGroup]="userForm"
+            (ngSubmit)="onSubmitHandler(userForm.value)"
+        >
+            <div
+                *ngIf="attr.isFieldVisibleUsername"
+                class="col-12 form-group p-0"
+            >
+                <label
+                    class="form-control-label"
+                    for="username"
+                >Username</label>
+                <input
+                    formControlName="username"
+                    type="text"
+                    class="form-control"
+                    [class.is-invalid]="userForm.get('username').touched && errors.username"
+                    id="username"
+                    placeholder="Enter username"
+                />
+                <div
+                    *ngIf="userForm.get('username').touched && errors.username"
+                    class="invalid-feedback"
+                >{{errors.username ? errors.username : 'Username is Required!'}}</div>
+            </div>
+            <div
+                *ngIf="attr.isFieldVisibleEmail"
+                class="col-12 form-group p-0"
+            >
+                <label
+                    class="form-control-label"
+                    for="email"
+                >Email</label>
+                <input
+                    formControlName="email"
+                    type="email"
+                    class="form-control"
+                    [class.is-invalid]="userForm.get('email').touched && !userForm.get('email').valid"
+                    id="email"
+                    placeholder="Enter email"
+                />
+                <div
+                    *ngIf="userForm.get('email').touched && !userForm.get('email').valid"
+                    class="invalid-feedback"
+                >{{errors.email ? errors.email : 'Email is Required!'}}</div>
+            </div>
+            <div
+                *ngIf="attr.isFieldVisiblePassword"
+                class="col-12 form-group p-0"
+            >
+                <label
+                    class="form-control-label"
+                    for="password"
+                >Password</label>
+                <input
+                    formControlName="password"
+                    type="password"
+                    class="form-control"
+                    [class.is-invalid]="userForm.get('password').touched && !userForm.get('password').valid"
+                    id="password"
+                    placeholder="Enter password"
+                />
+                <div
+                    *ngIf="userForm.get('password').touched && !userForm.get('password').valid"
+                    class="invalid-feedback"
+                >{{errors.password ? errors.password : 'Password is Required!'}}</div>
+            </div>
+            <div
+                *ngIf="attr.isFieldVisiblePasswordCurrent"
+                class="col-12 form-group p-0"
+            >
+                <label
+                    class="form-control-label"
+                    for="passwordCurrent"
+                >Current Password</label>
+                <input
+                    formControlName="passwordCurrent"
+                    type="password"
+                    class="form-control"
+                    [class.is-invalid]="userForm.get('passwordCurrent').touched && !userForm.get('passwordCurrent').valid"
+                    id="passwordCurrent"
+                    placeholder="Enter current password"
+                />
+                <div
+                    *ngIf="userForm.get('passwordCurrent').touched && !userForm.get('passwordCurrent').valid"
+                    class="invalid-feedback"
+                >{{errors.passwordCurrent ? errors.passwordCurrent : 'Password is Required!'}}</div>
+            </div>
+            <div
+                *ngIf="attr.isFieldVisiblePasswordNew"
+                class="col-12 form-group p-0"
+            >
+                <label
+                    class="form-control-label"
+                    for="passwordNew"
+                >New Password</label>
+                <input
+                    formControlName="passwordNew"
+                    type="password"
+                    class="form-control"
+                    [class.is-invalid]="userForm.get('passwordNew').touched && !userForm.get('passwordNew').valid"
+                    id="passwordNew"
+                    placeholder="Enter new password"
+                />
+                <div
+                    *ngIf="userForm.get('passwordNew').touched && !userForm.get('passwordNew').valid"
+                    class="invalid-feedback"
+                >{{errors.passwordNew ? errors.passwordNew : 'Password is Required!'}}</div>
+            </div>
+            <div
+                *ngIf="attr.isFieldVisiblePasswordRepeat"
+                class="col-12 form-group p-0"
+            >
+                <label
+                    class="form-control-label"
+                    for="passwordRepeat"
+                >Repeat Password</label>
+                <input
+                    formControlName="passwordRepeat"
+                    type="password"
+                    class="form-control"
+                    [class.is-invalid]="userForm.get('passwordRepeat').touched && !userForm.get('passwordRepeat').valid"
+                    id="passwordRepeat"
+                    placeholder="Repeat password"
+                />
+                <div
+                    *ngIf="userForm.get('passwordRepeat').touched && !userForm.get('passwordRepeat').valid"
+                    class="invalid-feedback"
+                >{{errors.passwordRepeat ? errors.passwordRepeat : 'Password is Required!'}}</div>
+            </div>
+            <div
+                *ngIf="attr.isFieldVisiblePasswordRepeatNew"
+                class="col-12 form-group p-0"
+            >
+                <label
+                    class="form-control-label"
+                    for="passwordRepeatNew"
+                >Repeat New Password</label>
+                <input
+                    formControlName="passwordRepeatNew"
+                    type="password"
+                    class="form-control"
+                    [class.is-invalid]="userForm.get('passwordRepeatNew').touched && !userForm.get('passwordRepeatNew').valid"
+            
+                    id="passwordRepeatNew"
+                    placeholder="Repeat new password"
+                />
+                <div
+                    *ngIf="userForm.get('passwordRepeatNew').touched && !userForm.get('passwordRepeatNew').valid"
+                    class="invalid-feedback"
+                >{{errors.passwordRepeatNew ? errors.passwordRepeatNew : 'Password is Required!'}}</div>
+            </div>
+            <div
+                class="btn-group d-flex"
+                role="group"
+            >
+                <button
+                    (click)="cancel()"
+                    type="button"
+                    class="btn btn-outline-secondary w-100"
+                >Cancel</button>
+                <button
+                    type="submit"
+                    class="btn {{attr.btnColor}} w-100"
+                    [disabled]="userForm.invalid || isSubmitting"
+                >{{attr.btnText}}</button>
+            </div>
+        </form>
+    </article>
+</section>

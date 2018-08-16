@@ -1,0 +1,99 @@
+<section class="align-items-center d-flex flex-column">
+    <h1 class="text-center">Edit User Roles</h1>
+    <article class=" col-6">
+        <form
+            *ngIf="userForm"
+            [formGroup]="userForm"
+            (ngSubmit)="onSubmitHandler(userForm.value)"
+        >
+            <h5>Current roles: {{currentRoles.length > 0 ? currentRoles.join(', ') : 'None'}}</h5>
+            <div class="form-row mt-4">
+                <div class="form-group col-5">
+                    <select
+                        (change)="onChangeHandler()"
+                        formControlName="availableRoles"
+                        class="form-control form-control-sm h-100"
+                        id="availableRoles"
+                        multiple
+                    >
+                        <option *ngFor="let role of availableRoles">{{ role }}</option>
+                    </select>
+                </div>
+                <div class="form-group col-2">
+                    <div class="text-center">
+                        <div
+                            class="btn-group-vertical btn-group-xs"
+                            role="group"
+                        >
+                            <input
+                                (click)="onClickAllToRight()"
+                                type="button"
+                                class="btn btn-outline-secondary"
+                                value=">>"
+                                [disabled]="availableRoles.length === 0"
+                            />
+                            <input
+                                (click)="onClickSelectedToRight()"
+                                type="button"
+                                class="btn btn-outline-secondary"
+                                value=">"
+                                [disabled]="availableRoles.length === 0"
+                            />
+                            <input
+                                (click)="onClickSelectedToLeft()"
+                                type="button"
+                                class="btn btn-outline-secondary"
+                                value="<"
+                                [disabled]="selectedRoles.length === 0"
+                            />
+                            <input
+                                (click)="onClickAllToLeft()"
+                                type="button"
+                                class="btn btn-outline-secondary"
+                                value="<<"
+                                [disabled]="selectedRoles.length === 0"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-5">
+                    <select
+                        (change)="onChangeHandler()"
+                        formControlName="selectedRoles"
+                        class="form-control form-control-sm h-100"
+                        id="selectedRoles"
+                        multiple
+                    >
+                        <option *ngFor="let role of selectedRoles">{{ role }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group form-row">
+                <div class="form-group col-12 d-flex flex-column">
+                    <p
+                        *ngIf="error"
+                        class="text-danger"
+                    >You must select a role!</p>
+                    <small>* Use the arrows to add or remove roles.</small>
+                    <small>* The selected roles in the right form will be saved and overwrite the current ones.</small>
+                </div>
+            </div>
+            <div
+                class="btn-group d-flex"
+                role="group"
+            >
+                <button
+                    (click)="cancel()"
+                    type="button"
+                    class="btn btn-outline-secondary w-100"
+                >Cancel</button>
+                <button
+                    type="submit"
+                    class="btn btn-outline-primary w-100"
+                    id="save-roles"
+                    [disabled]="error || isSubmitting"
+                >Save</button>
+            </div>
+        </form>
+    </article>
+</section>

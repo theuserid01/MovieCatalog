@@ -7,7 +7,7 @@ const usersService = require('../services/users-service')
 module.exports = {
     actionAll: async (req, res) => {
         const errors = {}
-        const pageSize = 20
+        const pageSize = 15
         const page = Math.abs(parseInt(req.query.page)) || 1
         const search = req.query.search
 
@@ -18,6 +18,10 @@ module.exports = {
 
         const currentPage = page
         const totalPages = Math.ceil(countUsers / pageSize)
+        const totalPagesRange = []
+        for (let i = 1; i <= totalPages; i++) {
+            totalPagesRange.push(i)
+        }
 
         const usersPagination = {
             currentPage: currentPage,
@@ -25,8 +29,11 @@ module.exports = {
             hasPrevPage: currentPage > 1,
             nextPage: page + 1,
             prevPage: page - 1,
-            searchQuery: search ? `&search=${search}` : '',
-            totalPages: totalPages
+            search: search,
+            queryPage: `&page=${currentPage}`,
+            querySearch: search ? `&search=${search}` : '',
+            totalPages: totalPages,
+            totalPagesRange: totalPagesRange
         }
 
         return res.status(200).json({
@@ -110,17 +117,17 @@ module.exports = {
     actionEditDetailsGet: async (req, res) => {
         const errors = {}
         const id = req.params.id
-        const isNotAdmin = req.user
-            .roles.indexOf(constants.ADMINISTRATOR_ROLE) === -1
-        // _id obj prop != id string
-        if (req.user._id != id && isNotAdmin) {
-            return res.status(403).json({
-                errors: errors,
-                data: {},
-                message: 'Access forbidden!',
-                success: false
-            })
-        }
+        // const isNotAdmin = req.user
+        //     .roles.indexOf(constants.ADMINISTRATOR_ROLE) === -1
+        // // _id obj prop != id string
+        // if (req.user._id != id && isNotAdmin) {
+        //     return res.status(403).json({
+        //         errors: errors,
+        //         data: {},
+        //         message: 'Access forbidden!',
+        //         success: false
+        //     })
+        // }
 
         try {
             const user = await usersService.getUserByIdAsync(id)

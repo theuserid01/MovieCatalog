@@ -1,0 +1,32 @@
+<div class="col-12">
+    <ul
+        *ngIf="pagination; let p"
+        class="pagination"
+    >
+        <li [ngClass]="p.hasPrevPage ? 'page-item' : 'page-item disabled'">
+            <a
+                routerLink="/users/all"
+                [queryParams]="{page: p.prevPage, search: p.search}"
+                class="page-link"
+            >Previous</a>
+        </li>
+        <li
+            *ngFor="let i of p.totalPagesRange"
+            class="page-item"
+            [class.active]="i === p.currentPage"
+        >
+            <a
+                routerLink="/users/all"
+                [queryParams]="{page: i, search: p.search}"
+                class="page-link"
+            >{{i}}</a>
+        </li>
+        <li [ngClass]="p.hasNextPage ? 'page-item' : 'page-item disabled'">
+            <a
+                routerLink="/users/all"
+                [queryParams]="{page: p.nextPage, search: p.search}"
+                class="page-link"
+            >Next</a>
+        </li>
+    </ul>
+</div>
