@@ -39,12 +39,12 @@
                     formControlName="email"
                     type="email"
                     class="form-control"
-                    [class.is-invalid]="userForm.get('email').touched && !userForm.get('email').valid"
+                    [class.is-invalid]="userForm.get('email').touched && errors.email"
                     id="email"
                     placeholder="Enter email"
                 />
                 <div
-                    *ngIf="userForm.get('email').touched && !userForm.get('email').valid"
+                    *ngIf="userForm.get('email').touched && errors.email"
                     class="invalid-feedback"
                 >{{errors.email ? errors.email : 'Email is Required!'}}</div>
             </div>
@@ -60,12 +60,12 @@
                     formControlName="password"
                     type="password"
                     class="form-control"
-                    [class.is-invalid]="userForm.get('password').touched && !userForm.get('password').valid"
+                    [class.is-invalid]="userForm.get('password').touched && errors.password"
                     id="password"
                     placeholder="Enter password"
                 />
                 <div
-                    *ngIf="userForm.get('password').touched && !userForm.get('password').valid"
+                    *ngIf="userForm.get('password').touched && errors.password"
                     class="invalid-feedback"
                 >{{errors.password ? errors.password : 'Password is Required!'}}</div>
             </div>
@@ -81,12 +81,12 @@
                     formControlName="passwordCurrent"
                     type="password"
                     class="form-control"
-                    [class.is-invalid]="userForm.get('passwordCurrent').touched && !userForm.get('passwordCurrent').valid"
+                    [class.is-invalid]="userForm.get('passwordCurrent').touched && errors.passwordCurrent"
                     id="passwordCurrent"
                     placeholder="Enter current password"
                 />
                 <div
-                    *ngIf="userForm.get('passwordCurrent').touched && !userForm.get('passwordCurrent').valid"
+                    *ngIf="userForm.get('passwordCurrent').touched && errors.passwordCurrent"
                     class="invalid-feedback"
                 >{{errors.passwordCurrent ? errors.passwordCurrent : 'Password is Required!'}}</div>
             </div>
@@ -102,12 +102,12 @@
                     formControlName="passwordNew"
                     type="password"
                     class="form-control"
-                    [class.is-invalid]="userForm.get('passwordNew').touched && !userForm.get('passwordNew').valid"
+                    [class.is-invalid]="userForm.get('passwordNew').touched && errors.passwordNew"
                     id="passwordNew"
                     placeholder="Enter new password"
                 />
                 <div
-                    *ngIf="userForm.get('passwordNew').touched && !userForm.get('passwordNew').valid"
+                    *ngIf="userForm.get('passwordNew').touched && errors.passwordNew"
                     class="invalid-feedback"
                 >{{errors.passwordNew ? errors.passwordNew : 'Password is Required!'}}</div>
             </div>
@@ -123,12 +123,12 @@
                     formControlName="passwordRepeat"
                     type="password"
                     class="form-control"
-                    [class.is-invalid]="userForm.get('passwordRepeat').touched && !userForm.get('passwordRepeat').valid"
+                    [class.is-invalid]="userForm.get('passwordRepeat').touched && errors.passwordRepeat"
                     id="passwordRepeat"
                     placeholder="Repeat password"
                 />
                 <div
-                    *ngIf="userForm.get('passwordRepeat').touched && !userForm.get('passwordRepeat').valid"
+                    *ngIf="userForm.get('passwordRepeat').touched && errors.passwordRepeat"
                     class="invalid-feedback"
                 >{{errors.passwordRepeat ? errors.passwordRepeat : 'Password is Required!'}}</div>
             </div>
@@ -144,13 +144,12 @@
                     formControlName="passwordRepeatNew"
                     type="password"
                     class="form-control"
-                    [class.is-invalid]="userForm.get('passwordRepeatNew').touched && !userForm.get('passwordRepeatNew').valid"
-            
+                    [class.is-invalid]="userForm.get('passwordRepeatNew').touched && errors.passwordRepeatNew"
                     id="passwordRepeatNew"
                     placeholder="Repeat new password"
                 />
                 <div
-                    *ngIf="userForm.get('passwordRepeatNew').touched && !userForm.get('passwordRepeatNew').valid"
+                    *ngIf="userForm.get('passwordRepeatNew').touched && errors.passwordRepeatNew"
                     class="invalid-feedback"
                 >{{errors.passwordRepeatNew ? errors.passwordRepeatNew : 'Password is Required!'}}</div>
             </div>

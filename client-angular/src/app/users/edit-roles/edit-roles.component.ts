@@ -12,13 +12,13 @@ import { EditRolesModel } from '../models/edit-roles.model';
 })
 export class EditRolesComponent extends AbstractComponent implements OnInit {
     public error: boolean;
-    public id: string;
     public isSubmitting: boolean;
     public allRoles: string[];
     public availableRoles: string[];
     public currentRoles: string[];
     public selectedRoles: string[];
     public userForm: FormGroup;
+    public roles: string[];
 
     constructor(
         private fb: FormBuilder,
@@ -29,7 +29,6 @@ export class EditRolesComponent extends AbstractComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.id = this.activatedRoute.snapshot.params.id;
         this.getData();
     }
 
@@ -38,7 +37,8 @@ export class EditRolesComponent extends AbstractComponent implements OnInit {
     }
 
     getData() {
-        this.usersService.editRolesGet(this.id)
+        const id = this.activatedRoute.snapshot.params.id;
+        this.usersService.editRolesGet(id)
             .subscribe(
                 (res: any) => {
                     if (!res.success) {
@@ -107,9 +107,18 @@ export class EditRolesComponent extends AbstractComponent implements OnInit {
         this.selectedRoles.sort();
     }
 
-    onSubmitHandler(data: EditRolesModel) {
+    onSubmitHandler() {
+        const id = this.activatedRoute.snapshot.params.id;
+        const data = {
+            roles: this.selectedRoles,
+            allRoles: this.allRoles,
+            availableRoles: this.availableRoles,
+            currentRoles: this.currentRoles,
+            selectedRoles: this.selectedRoles
+        };
+
         this.isSubmitting = true;
-        this.usersService.editRolesPost(this.id, data)
+        this.usersService.editRolesPost(id, data)
             .subscribe(
                 (res: any) => {
                     if (!res.success) {

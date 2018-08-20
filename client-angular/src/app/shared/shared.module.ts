@@ -4,10 +4,12 @@ import { RouterModule } from '@angular/router';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
     declarations: [
         NavbarComponent,
+        NotFoundComponent,
         PaginationComponent
     ],
     exports: [

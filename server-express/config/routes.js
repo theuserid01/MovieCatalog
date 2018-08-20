@@ -8,43 +8,81 @@ module.exports = (app) => {
     app.all('/', moviesController.actionIndex)
     app.get('/movies/all', moviesController.actionIndex)
 
+    // Movies routes
     app.post(
         '/movies/create',
         auth.isAuthenticated,
         moviesController.actionCreatePost)
     app.get(
         '/movies/delete/:id',
+        auth.isValidParamId,
         auth.isInRole(constants.ADMINISTRATOR_ROLE),
         moviesController.actionCrudGet)
     app.post(
         '/movies/delete/:id',
+        auth.isValidParamId,
         auth.isInRole(constants.ADMINISTRATOR_ROLE),
         moviesController.actionDeletePost)
     app.get(
         '/movies/edit/:id',
+        auth.isValidParamId,
         auth.isAuthenticated,
         moviesController.actionCrudGet)
     app.post(
         '/movies/edit/:id',
+        auth.isValidParamId,
         auth.isAuthenticated,
         moviesController.actionEditPost)
 
+    // Users routes
+    app.get(
+        '/users/all',
+        auth.isInRole(constants.ADMINISTRATOR_ROLE),
+        usersController.actionAll
+    )
+    app.get(
+        '/users/delete/:id',
+        auth.isValidParamId,
+        auth.isInRole(constants.ADMINISTRATOR_ROLE),
+        usersController.actionDeleteGet
+    )
+    app.post(
+        '/users/delete/:id',
+        auth.isValidParamId,
+        auth.isInRole(constants.ADMINISTRATOR_ROLE),
+        usersController.actionDeletePost
+    )
     app.get(
         '/users/edit/details/:id',
-        // auth.isAuthenticated,
+        auth.isValidParamId,
+        auth.isAuthenticated,
         usersController.actionEditDetailsGet
     )
     app.post(
         '/users/edit/details/:id',
-        // auth.isAuthenticated,
+        auth.isValidParamId,
+        auth.isAuthenticated,
         auth.isValidUsername,
         auth.isValidEmail,
         usersController.actionEditDetailsPost
     )
     app.post(
         '/users/edit/password/:id',
-        // auth.isAuthenticated,
+        auth.isValidParamId,
+        auth.isAuthenticated,
         usersController.actionEditPasswordPost
+    )
+    app.get(
+        '/users/edit/roles/:id',
+        auth.isValidParamId,
+        auth.isInRole(constants.ADMINISTRATOR_ROLE),
+        usersController.actionEditRolesGet
+    )
+    app.post(
+        '/users/edit/roles/:id',
+        auth.isValidParamId,
+        auth.isInRole(constants.ADMINISTRATOR_ROLE),
+        usersController.actionEditRolesPost
     )
     app.post(
         '/users/signin',
@@ -58,33 +96,6 @@ module.exports = (app) => {
         auth.isValidEmail,
         auth.isValidPassword,
         usersController.actionSignUpPost
-    )
-
-    // Admin users routes
-    app.get(
-        '/users/all',
-        // auth.isInRole(constants.ADMINISTRATOR_ROLE),
-        usersController.actionAll
-    )
-    app.get(
-        '/users/delete/:id',
-        // auth.isInRole(constants.ADMINISTRATOR_ROLE),
-        usersController.actionDeleteGet
-    )
-    app.post(
-        '/users/delete/:id',
-        // auth.isInRole(constants.ADMINISTRATOR_ROLE),
-        usersController.actionDeletePost
-    )
-    app.get(
-        '/users/edit/roles/:id',
-        // auth.isInRole(constants.ADMINISTRATOR_ROLE),
-        usersController.actionEditRolesGet
-    )
-    app.post(
-        '/users/edit/roles/:id',
-        //auth.isInRole(constants.ADMINISTRATOR_ROLE),
-        usersController.actionEditRolesPost
     )
 
     // Fallback route

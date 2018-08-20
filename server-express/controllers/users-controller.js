@@ -161,17 +161,18 @@ module.exports = {
     actionEditDetailsPost: async (req, res) => {
         const errors = {}
         const id = req.params.id
-        const isNotAdmin = req.user
-            .roles.indexOf(constants.ADMINISTRATOR_ROLE) === -1
-        // _id obj prop != id string
-        if (req.user._id != id && isNotAdmin) {
-            return res.status(403).json({
-                errors: errors,
-                data: {},
-                message: 'Access forbidden!',
-                success: false
-            })
-        }
+
+        // const isNotAdmin = req.user
+        //     .roles.indexOf(constants.ADMINISTRATOR_ROLE) === -1
+        // // _id obj prop != id string
+        // if (req.user._id != id && isNotAdmin) {
+        //     return res.status(403).json({
+        //         errors: errors,
+        //         data: {},
+        //         message: 'Access forbidden!',
+        //         success: false
+        //     })
+        // }
 
         try {
             let user = await usersService.getUserByIdAsync(id)
@@ -180,7 +181,7 @@ module.exports = {
                 return res.status(404).json({
                     errors: errors,
                     data: {},
-                    message: 'User not found!',
+                    message: 'Edit user details failed: User not found!',
                     success: false
                 })
             }
@@ -195,7 +196,7 @@ module.exports = {
                     return res.status(200).json({
                         errors: errors,
                         data: {},
-                        message: 'Edit user details failed!',
+                        message: 'Edit user details failed: Email taken!',
                         success: false
                     })
                 }
@@ -209,7 +210,7 @@ module.exports = {
                     return res.status(200).json({
                         errors: errors,
                         data: {},
-                        message: 'Edit user details failed!',
+                        message: 'Edit user details failed: Username taken!',
                         success: false
                     })
                 }
@@ -219,6 +220,7 @@ module.exports = {
                 email: reqUser.email,
                 username: reqUser.username
             }
+            console.log(reqUser)
 
             user = await usersService.editUserAsync(id, data)
 
@@ -232,10 +234,10 @@ module.exports = {
         } catch (err) {
             console.log('ERROR_NAME:', err.name)
             console.log('ERROR_MESSAGE:', err.message)
-            return res.status(200).json({
+            return res.status(500).json({
                 errors: errors,
                 data: {},
-                message: 'Edit user details failed!',
+                message: 'Edit user details failed: Server error!',
                 success: false
             })
         }
@@ -256,21 +258,21 @@ module.exports = {
         }
 
         if (!reqUser ||
-            typeof reqUser.currentPassword !== 'string' ||
-            reqUser.currentPassword.trim().length === 0) {
-            errors.currentPassword = 'Password is required!'
+            typeof reqUser.passwordCurrent !== 'string' ||
+            reqUser.passwordCurrent.trim().length === 0) {
+            errors.passwordCurrent = 'Password is required!'
         }
 
         if (!reqUser ||
-            typeof reqUser.newPassword !== 'string' ||
-            reqUser.newPassword.trim().length === 0) {
-            errors.newPassword = 'Password is required!'
+            typeof reqUser.passwordNew !== 'string' ||
+            reqUser.passwordNew.trim().length === 0) {
+            errors.passwordNew = 'Password is required!'
         }
 
         if (!reqUser ||
-            typeof reqUser.repeatNewPassword !== 'string' ||
-            reqUser.repeatNewPassword.trim().length === 0) {
-            errors.repeatNewPassword = 'Password is required!'
+            typeof reqUser.passwordRepeatNew !== 'string' ||
+            reqUser.passwordRepeatNew.trim().length === 0) {
+            errors.passwordRepeatNew = 'Password is required!'
         }
 
         if (Object.keys(errors).length > 0) {
@@ -282,9 +284,9 @@ module.exports = {
             })
         }
 
-        if (reqUser.newPassword !== reqUser.repeatNewPassword) {
-            errors.newPassword = 'Passwords do not match!'
-            errors.repeatNewPassword = 'Passwords do not match!'
+        if (reqUser.passwordNew !== reqUser.passwordRepeatNew) {
+            errors.passwordNew = 'Passwords do not match!'
+            errors.passwordRepeatNew = 'Passwords do not match!'
             return res.status(200).json({
                 errors: errors,
                 data: {},
@@ -306,8 +308,8 @@ module.exports = {
                 })
             }
 
-            if (!user.authenticate(reqUser.currentPassword)) {
-                errors.currentPassword = 'Invalid password!'
+            if (!user.authenticate(reqUser.passwordCurrent)) {
+                errors.passwordCurrent = 'Invalid password!'
                 return res.status(200).json({
                     errors: errors,
                     data: {},
@@ -318,8 +320,8 @@ module.exports = {
 
             const salt = encryption.generateSalt()
             const hashedPass = encryption
-                .generateHashedPassword(salt, reqUser.newPassword)
-            console.log(reqUser.newPassword, hashedPass)
+                .generateHashedPassword(salt, reqUser.passwordNew)
+            console.log(reqUser.passwordNew, hashedPass)
             const data = {
                 hashedPass,
                 salt
@@ -362,12 +364,14 @@ module.exports = {
                 })
             }
 
+            const roles = [];
             const allRoles = constants.USER_ROLES
             const availableRoles = constants.USER_ROLES
                 .filter(elem => -1 === user.roles.indexOf(elem))
             const currentRoles = user.roles
             const selectedRoles = currentRoles
             const data = {
+                roles,
                 allRoles,
                 availableRoles,
                 currentRoles,
@@ -488,6 +492,7 @@ module.exports = {
                     errors: errors,
                     data: data,
                     message: 'Login successful!',
+                    token: authToken,
                     success: true
                 })
             })
@@ -519,9 +524,9 @@ module.exports = {
             errors.email = 'Email taken!'
         }
 
-        if (reqUser.password !== reqUser.repeatPassword) {
+        if (reqUser.password !== reqUser.passwordRepeat) {
             errors.password = 'Passwords do not match!'
-            errors.repeatPassword = 'Passwords do not match!'
+            errors.passwordRepeat = 'Passwords do not match!'
         }
 
         if (Object.keys(errors).length > 0) {

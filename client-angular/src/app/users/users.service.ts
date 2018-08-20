@@ -24,10 +24,6 @@ export class UsersService {
         private httpClient: HttpClient
     ) { }
 
-    get user() {
-        return JSON.parse(localStorage.getItem('user'));
-    }
-
     allGet(query: string) {
         return this.httpClient.get<UserModel>(allUrl + query);
     }
@@ -58,18 +54,6 @@ export class UsersService {
 
     deletePost(id: string, data: BaseModel) {
         return this.httpClient.post(deleteUrl + id, data);
-    }
-
-    isAdmin(): boolean {
-        if (this.user) {
-            return this.user.isAdmin;
-        }
-
-        return false;
-    }
-
-    isAuthenticated(): boolean {
-        return localStorage.getItem('user') !== null;
     }
 
     signIn(data: SignInModel) {

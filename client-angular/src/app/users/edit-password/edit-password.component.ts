@@ -23,7 +23,6 @@ export class EditPasswordComponent extends AbstractComponent implements OnInit {
         title: 'Edit Password'
     };
     public errors = {};
-    public id: string;
     public formModel: EditPasswordModel;
     public isFormReady: boolean;
     public isSubmitting: boolean;
@@ -33,8 +32,6 @@ export class EditPasswordComponent extends AbstractComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.id = this.activatedRoute.snapshot.params.id;
-
         this.formModel = {
             passwordCurrent: '',
             passwordNew: '',
@@ -44,9 +41,16 @@ export class EditPasswordComponent extends AbstractComponent implements OnInit {
         this.isFormReady = true;
     }
 
-    onSubmitHandler(data: EditPasswordModel) {
+    onSubmitHandler(values: EditPasswordModel) {
+        const id = this.activatedRoute.snapshot.params.id;
+        const data = {
+            passwordCurrent: values.passwordCurrent,
+            passwordNew: values.passwordNew,
+            passwordRepeatNew: values.passwordRepeatNew
+        };
+
         this.isSubmitting = true;
-        this.usersService.editPasswordPost(this.id, data)
+        this.usersService.editPasswordPost(id, data)
             .subscribe(
                 (res: any) => {
                     if (!res.success) {

@@ -24,7 +24,6 @@ export class EditDetailsComponent extends AbstractComponent implements OnInit {
     };
     public errors = {};
     public formModel: BaseModel;
-    public id: string;
     public isFormReady: boolean;
     public isSubmitting: boolean;
 
@@ -33,13 +32,13 @@ export class EditDetailsComponent extends AbstractComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.id = this.activatedRoute.snapshot.params.id;
         this.isFormReady = false;
         this.getData();
     }
 
     getData() {
-        this.usersService.editDetailsGet(this.id)
+        const id = this.activatedRoute.snapshot.params.id;
+        this.usersService.editDetailsGet(id)
             .subscribe(
                 (res: any) => {
                     if (!res.success) {
@@ -55,9 +54,15 @@ export class EditDetailsComponent extends AbstractComponent implements OnInit {
             );
     }
 
-    onSubmitHandler(data: BaseModel) {
+    onSubmitHandler(values: BaseModel) {
+        const id = this.activatedRoute.snapshot.params.id;
+        const data = {
+            email: values.email,
+            username: values.username
+        };
+
         this.isSubmitting = true;
-        this.usersService.editDetailsPost(this.id, data)
+        this.usersService.editDetailsPost(id, data)
             .subscribe(
                 (res: any) => {
                     if (!res.success) {

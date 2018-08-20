@@ -80,7 +80,7 @@ const isValidEmail = async (req, res, next) => {
         return res.status(200).json({
             errors: errors,
             data: {},
-            message: 'Request failed!',
+            message: 'Email is required!',
             success: false
         })
     }
@@ -99,7 +99,24 @@ const isValidPassword = async (req, res, next) => {
         return res.status(200).json({
             errors: errors,
             data: {},
-            message: 'Request failed!',
+            message: 'Password is required!',
+            success: false
+        })
+    }
+
+    next()
+}
+
+const isValidParamId = async (req, res, next) => {
+    const errors = {}
+    const id = req.params.id
+ 
+    if (id === 'undefined') {
+        console.log('bla', id)
+        return res.status(400).json({
+            errors: errors,
+            data: {},
+            message: 'Param id in url is undefined!',
             success: false
         })
     }
@@ -118,7 +135,7 @@ const isValidUsername = async (req, res, next) => {
         return res.status(200).json({
             errors: errors,
             data: {},
-            message: 'Request failed!',
+            message: 'Username is required!',
             success: false
         })
     }
@@ -130,6 +147,7 @@ module.exports = {
     isAuthenticated,
     isInRole,
     isValidEmail,
+    isValidParamId,
     isValidPassword,
     isValidUsername
 }

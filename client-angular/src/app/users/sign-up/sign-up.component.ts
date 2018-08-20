@@ -42,7 +42,14 @@ export class SignUpComponent extends AbstractComponent implements OnInit {
         this.isFormReady = true;
     }
 
-    onSubmitHandler(data: SignUpModel) {
+    onSubmitHandler(values: SignUpModel) {
+        const data = {
+            email: values.email,
+            password: values.password,
+            passwordRepeat: values.passwordRepeat,
+            username: values.username
+        };
+
         this.isSubmitting = true;
         this.usersService.signUp(data)
             .subscribe(
