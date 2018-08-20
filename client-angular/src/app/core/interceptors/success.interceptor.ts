@@ -47,7 +47,7 @@ export class SuccessInterceptor implements HttpInterceptor {
                     this.tostrService.success(res.body.message, 'Success!');
                 }
 
-                if (this.authService.isAdmin && res.url.includes('users')) {
+                if (this.authService.isAdmin() && res.url.includes('users')) {
                     this.router.navigate(['/users/all']);
                 } else {
                     this.router.navigate(['/']);

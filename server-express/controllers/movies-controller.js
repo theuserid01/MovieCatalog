@@ -50,28 +50,20 @@ module.exports = {
                 success: true
             })
         } catch (err) {
-            console.log('ERROR_NAME:', err.name)
-            console.log('ERROR_MESSAGE:', err.message)
-            return res.status(200).json({
-                errors: errors,
-                data: {},
-                message: 'Get movies failed!',
-                success: false
-            })
+            catchErr(res, err)
         }
     },
     actionCreatePost: async (req, res) => {
         const errors = {}
-        const reqMovie = req.body
 
-        if (!reqMovie ||
-            typeof reqMovie.title !== 'string' ||
-            reqMovie.title.trim().length === 0) {
+        if (!req.body ||
+            typeof req.body.title !== 'string' ||
+            req.body.title.trim().length === 0) {
             errors.title = 'Title is required!'
 
         }
 
-        if (!reqMovie || isNaN(reqMovie.productionYear)) {
+        if (!req.body || isNaN(req.body.productionYear)) {
             errors.productionYear = 'Production year is required!'
         }
 
@@ -86,13 +78,13 @@ module.exports = {
 
         try {
             let data = {
-                color: reqMovie.color,
-                countries: reqMovie.countries,
-                genres: reqMovie.genres,
-                imageUrl: reqMovie.imageUrl,
-                languages: reqMovie.languages,
-                productionYear: reqMovie.productionYear,
-                title: reqMovie.title
+                color: req.body.color,
+                countries: req.body.countries,
+                genres: req.body.genres,
+                imageUrl: req.body.imageUrl,
+                languages: req.body.languages,
+                productionYear: req.body.productionYear,
+                title: req.body.title
             }
 
             const movie = await moviesService.createMovieAsync(data)
@@ -105,67 +97,25 @@ module.exports = {
             })
 
         } catch (err) {
-            console.log('ERROR_NAME:', err.name)
-            console.log('ERROR_MESSAGE:', err.message)
-            return res.status(200).json({
-                errors: errors,
-                data: {},
-                message: 'Create movie failed!',
-                success: false
-            })
+            catchErr(res, err)
         }
     },
     actionCrudGet: async (req, res) => {
         const errors = {}
-        const id = req.params.id
-
-        try {
-            const movie = await moviesService.getMovieByIdAsync(id)
-
-            if (movie == null) {
-                return res.status(404).json({
-                    errors: errors,
-                    data: {},
-                    message: 'Movie not found!',
-                    success: false
-                })
-            }
-
-            return res.status(200).json({
-                errors: errors,
-                data: movie,
-                message: 'Get movie successful!',
-                success: true
-            })
-        } catch (err) {
-            console.log('ERROR_NAME:', err.name)
-            console.log('ERROR_MESSAGE:', err.message)
-            return res.status(200).json({
-                errors: errors,
-                data: {},
-                message: 'Get movie failed!',
-                success: false
-            })
-        }
-
+        const movie = req.movie
+        return res.status(200).json({
+            errors: errors,
+            data: movie,
+            message: 'Get movie successful!',
+            success: true
+        })
     },
     actionDeletePost: async (req, res) => {
         const errors = {}
-        const id = req.params.id
+        let movie = req.movie
 
         try {
-            let movie = await moviesService.getMovieByIdAsync(id)
-
-            if (movie == null) {
-                return res.status(404).json({
-                    errors: errors,
-                    data: {},
-                    message: 'Movie not found!',
-                    success: false
-                })
-            }
-
-            movie = await moviesService.deleteMovieAsync(id)
+            movie = await moviesService.deleteMovieAsync(movie._id)
 
             return res.status(200).json({
                 errors: errors,
@@ -175,56 +125,47 @@ module.exports = {
             })
 
         } catch (err) {
-            console.log('ERROR_NAME:', err.name)
-            console.log('ERROR_MESSAGE:', err.message)
-            return res.status(200).json({
-                errors: errors,
-                data: {},
-                message: 'Delete movie failed!',
-                success: false
-            })
+            catchErr(res, err)
         }
     },
     actionEditPost: async (req, res) => {
         const errors = {}
-        const id = req.params.id
-        const reqMovie = req.body
+        let movie = req.movie
 
-        if (!reqMovie ||
-            typeof reqMovie.title !== 'string' ||
-            reqMovie.title.trim().length === 0) {
+        if (!req.body ||
+            typeof req.body.title !== 'string' ||
+            req.body.title.trim().length === 0) {
             errors.title = 'Title is required!'
 
         }
 
-        if (!reqMovie || isNaN(reqMovie.productionYear)) {
+        if (!req.body || isNaN(req.body.productionYear)) {
             errors.productionYear = 'Production year is required!'
         }
 
+
+        if (Object.keys(errors).length) {
+            return res.status(200).json({
+                errors: errors,
+                data: {},
+                message: 'Edit movie failed!',
+                success: false
+            })
+        }
+
         try {
-            let movie = await moviesService.getMovieByIdAsync(id)
-
-            if (movie == null) {
-                return res.status(404).json({
-                    errors: errors,
-                    data: {},
-                    message: 'Movie not found!',
-                    success: false
-                })
-            }
-
             const data = {
-                colors: reqMovie.colors,
-                countries: reqMovie.countries,
-                genres: reqMovie.genres,
-                imageUrl: reqMovie.imageUrl,
-                languages: reqMovie.languages,
-                productionYear: reqMovie.productionYear,
-                synopsis: reqMovie.synopsis,
-                title: reqMovie.title
+                colors: req.body.colors,
+                countries: req.body.countries,
+                genres: req.body.genres,
+                imageUrl: req.body.imageUrl,
+                languages: req.body.languages,
+                productionYear: req.body.productionYear,
+                synopsis: req.body.synopsis,
+                title: req.body.title
             }
 
-            movie = await moviesService.editMovieAsync(id, data)
+            movie = await moviesService.editMovieAsync(movie, data)
 
             return res.status(200).json({
                 errors: errors,
@@ -234,14 +175,18 @@ module.exports = {
             })
 
         } catch (err) {
-            console.log('ERROR_NAME:', err.name)
-            console.log('ERROR_MESSAGE:', err.message)
-            return res.status(200).json({
-                errors: errors,
-                data: {},
-                message: 'Edit movie failed!',
-                success: false
-            })
+            catchErr(res, err)
         }
     },
+}
+
+function catchErr(res, err) {
+    console.log('ERROR_NAME:', err.name)
+    console.log('ERROR_MESSAGE:', err.message)
+    return res.status(500).json({
+        errors: {},
+        data: {},
+        message: 'Server error!',
+        success: false
+    })
 }

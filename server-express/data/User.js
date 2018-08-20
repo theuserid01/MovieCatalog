@@ -34,13 +34,11 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-// Do not change to arrow function
-userSchema.method({
-    authenticate: function (password) {
-        return encryption
-            .generateHashedPassword(this.salt, password) === this.hashedPass
-    }
-})
+// Do not change to arrow function!
+userSchema.methods.authenticate = function (password) {
+    return encryption
+        .generateHashedPassword(this.salt, password) === this.hashedPass
+}
 
 const User = mongoose.model('User', userSchema)
 module.exports = User
@@ -60,8 +58,8 @@ module.exports.seedUsers = () => {
 
             for (let i = 1; i <= 60; i++) {
                 if (i > 1) {
-                    i = i >= 10 ? i : pad(i, 2)
-                    email = `user${i}@gmail.com`
+                    let index = i >= 10 ? i : `0${i}`
+                    email = `user${index}@gmail.com`
                     firstName = `user${i}`
                     lastName = `user${i}`
                     roles = []
@@ -82,10 +80,4 @@ module.exports.seedUsers = () => {
                 })
             }
         })
-}
-
-function pad(num, size) {
-    let s = num + ''
-    while (s.length < size) s = '0' + s
-    return s
 }

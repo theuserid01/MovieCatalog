@@ -18,24 +18,24 @@ const createUserAsync = async (data) => {
 }
 
 const deleteUserAsync = async (id) => {
-    let user = await getUserByIdAsync(id)
+    const user = await getUserByIdAsync(id)
 
     await user.remove()
 }
 
-const editUserAsync = async (id, data) => {
-    let user = await getUserByIdAsync(id)
-
+const editUserAsync = async (user, data) => {
     await user.update(data)
+    return user
 }
 
 const getAllUsersAsync = async (countUsers, search, page, pageSize) => {
     let query = User.find({})
 
     if (search) {
-        query = query
-            .where({ email: new RegExp(search, 'i') })
-            .or({ username: new RegExp(search, 'i') })
+        query = query.or([
+            { email: new RegExp(search, 'i') },
+            { username: new RegExp(search, 'i') }
+        ])
     }
 
     const skip = (page - 1) * pageSize
@@ -51,10 +51,10 @@ const getAllUsersAsync = async (countUsers, search, page, pageSize) => {
     return await query
 }
 
+// Do not exclude hashPass and salt
 const getUserByIdAsync = async (id) => {
     return await User
         .findById(id)
-        .select('-hashedPass -salt')
 }
 
 const getUserByUsernameAsync = async (username) => {

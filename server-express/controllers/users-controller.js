@@ -42,155 +42,82 @@ module.exports = {
                 users,
                 usersPagination
             },
-            message: 'Request successful!',
+            message: 'Get all users successful!',
             success: true
         })
     },
     actionDeleteGet: async (req, res) => {
         const errors = {}
-        const id = req.params.id
-
-        try {
-            const user = await usersService.getUserByIdAsync(id)
-
-            if (user == null) {
-                return res.status(404).json({
-                    errors: errors,
-                    data: {},
-                    message: 'User not found!',
-                    success: false
-                })
-            }
-
-            return res.status(200).json({
-                errors: errors,
-                data: user,
-                message: 'Get user details successful!',
-                success: true
-            })
-        } catch (err) {
-            console.log('ERROR_NAME:', err.name)
-            console.log('ERROR_MESSAGE:', err.message)
-            return res.status(200).json({
-                errors: errors,
-                data: {},
-                message: 'Get user details failed!',
-                success: false
-            })
-        }
+        const paramIdUser = req.paramIdUser
+        return res.status(200).json({
+            errors: errors,
+            data: dataUser(paramIdUser),
+            message: 'Get user details successful!',
+            success: true
+        })
     },
     actionDeletePost: async (req, res) => {
         const errors = {}
-        const id = req.params.id
+        const paramIdUser = req.paramIdUser
 
         try {
-            const user = await usersService.getUserByIdAsync(id)
-
-            if (user == null) {
-                return res.status(404).json({
-                    errors: errors,
-                    data: {},
-                    message: 'User not found!',
-                    success: false
-                })
-            }
-
-            await usersService.deleteUserAsync(id)
+            await usersService.deleteUserAsync(paramIdUser._id)
 
             return res.status(200).json({
                 errors: errors,
-                data: user,
+                data: dataUser(paramIdUser),
                 message: 'Delete user successful!',
                 success: true
             })
         } catch (err) {
-            console.log('ERROR_NAME:', err.name)
-            console.log('ERROR_MESSAGE:', err.message)
-            return res.status(200).json({
-                errors: errors,
-                data: {},
-                message: 'Delete user failed!',
-                success: false
-            })
+            catchErr(res, err)
         }
     },
     actionEditDetailsGet: async (req, res) => {
         const errors = {}
-        const id = req.params.id
-        // const isNotAdmin = req.user
-        //     .roles.indexOf(constants.ADMINISTRATOR_ROLE) === -1
-        // // _id obj prop != id string
-        // if (req.user._id != id && isNotAdmin) {
-        //     return res.status(403).json({
-        //         errors: errors,
-        //         data: {},
-        //         message: 'Access forbidden!',
-        //         success: false
-        //     })
-        // }
+        const paramIdUser = req.paramIdUser
 
-        try {
-            const user = await usersService.getUserByIdAsync(id)
-
-            if (user == null) {
-                return res.status(404).json({
-                    errors: errors,
-                    data: {},
-                    message: 'User not found!',
-                    success: false
-                })
-            }
-
-            return res.status(200).json({
-                errors: errors,
-                data: user,
-                message: 'Get user details successful!',
-                success: true
-            })
-        } catch (err) {
-            console.log('ERROR_NAME:', err.name)
-            console.log('ERROR_MESSAGE:', err.message)
-            return res.status(200).json({
+        const authTokenUser = req.authTokenUser
+        const isNotAdmin = authTokenUser
+            .roles.indexOf(constants.ADMINISTRATOR_ROLE) === -1 &&
+            authTokenUser._id !== paramIdUser._id
+        if (isNotAdmin) {
+            return res.status(403).json({
                 errors: errors,
                 data: {},
-                message: 'Get user details failed!',
+                message: 'Access forbidden!',
                 success: false
             })
         }
+
+        return res.status(200).json({
+            errors: errors,
+            data: dataUser(paramIdUser),
+            message: 'Get user details successful!',
+            success: true
+        })
     },
     actionEditDetailsPost: async (req, res) => {
         const errors = {}
-        const id = req.params.id
+        let paramIdUser = req.paramIdUser
 
-        // const isNotAdmin = req.user
-        //     .roles.indexOf(constants.ADMINISTRATOR_ROLE) === -1
-        // // _id obj prop != id string
-        // if (req.user._id != id && isNotAdmin) {
-        //     return res.status(403).json({
-        //         errors: errors,
-        //         data: {},
-        //         message: 'Access forbidden!',
-        //         success: false
-        //     })
-        // }
+        const authTokenUser = req.authTokenUser
+        const isNotAdmin = authTokenUser
+            .roles.indexOf(constants.ADMINISTRATOR_ROLE) === -1 &&
+            authTokenUser._id !== paramIdUser._id
+        if (isNotAdmin) {
+            return res.status(403).json({
+                errors: errors,
+                data: {},
+                message: 'Access forbidden!',
+                success: false
+            })
+        }
 
         try {
-            let user = await usersService.getUserByIdAsync(id)
-
-            if (user == null) {
-                return res.status(404).json({
-                    errors: errors,
-                    data: {},
-                    message: 'Edit user details failed: User not found!',
-                    success: false
-                })
-            }
-
-            const reqUser = req.body
-
-            if (reqUser.email !== user.email) {
+            if (req.body.email !== paramIdUser.email) {
                 const isEmailTaken = await usersService
-                    .isEmailTaken(reqUser.email)
+                    .isEmailTaken(req.body.email)
                 if (isEmailTaken) {
                     errors.email = 'Email taken!'
                     return res.status(200).json({
@@ -202,9 +129,9 @@ module.exports = {
                 }
             }
 
-            if (reqUser.username !== user.username) {
+            if (req.body.username !== paramIdUser.username) {
                 const isUsernameTaken = await usersService
-                    .isUsernameTaken(reqUser.username)
+                    .isUsernameTaken(req.body.username)
                 if (isUsernameTaken) {
                     errors.username = 'Username taken!'
                     return res.status(200).json({
@@ -217,61 +144,54 @@ module.exports = {
             }
 
             const data = {
-                email: reqUser.email,
-                username: reqUser.username
+                email: req.body.email,
+                username: req.body.username
             }
-            console.log(reqUser)
 
-            user = await usersService.editUserAsync(id, data)
+            paramIdUser = await usersService.editUserAsync(paramIdUser, data)
 
             return res.status(200).json({
                 errors: errors,
-                data: user,
+                data: dataUser(paramIdUser),
                 message: 'Edit user details successful!',
                 success: true
             })
 
         } catch (err) {
-            console.log('ERROR_NAME:', err.name)
-            console.log('ERROR_MESSAGE:', err.message)
-            return res.status(500).json({
-                errors: errors,
-                data: {},
-                message: 'Edit user details failed: Server error!',
-                success: false
-            })
+            catchErr(res, err)
         }
     },
     actionEditPasswordPost: async (req, res) => {
         const errors = {}
-        const id = req.params.id
-        const authUser = req.user
-        const reqUser = req.body
+        const authTokenUser = req.authTokenUser
+        let paramIdUser = req.paramIdUser
 
-        if (req.user._id != id) {
+        const authId = JSON.stringify(authTokenUser._id)
+        const paramId = JSON.stringify(paramIdUser._id)
+        if (authId !== paramId) {
             return res.status(403).json({
                 errors: errors,
                 data: {},
-                message: 'Access forbidden!',
+                message: 'Access forbidden bla!',
                 success: false
             })
         }
 
-        if (!reqUser ||
-            typeof reqUser.passwordCurrent !== 'string' ||
-            reqUser.passwordCurrent.trim().length === 0) {
+        if (!req.body ||
+            typeof req.body.passwordCurrent !== 'string' ||
+            req.body.passwordCurrent.trim().length === 0) {
             errors.passwordCurrent = 'Password is required!'
         }
 
-        if (!reqUser ||
-            typeof reqUser.passwordNew !== 'string' ||
-            reqUser.passwordNew.trim().length === 0) {
+        if (!req.body ||
+            typeof req.body.passwordNew !== 'string' ||
+            req.body.passwordNew.trim().length === 0) {
             errors.passwordNew = 'Password is required!'
         }
 
-        if (!reqUser ||
-            typeof reqUser.passwordRepeatNew !== 'string' ||
-            reqUser.passwordRepeatNew.trim().length === 0) {
+        if (!req.body ||
+            typeof req.body.passwordRepeatNew !== 'string' ||
+            req.body.passwordRepeatNew.trim().length === 0) {
             errors.passwordRepeatNew = 'Password is required!'
         }
 
@@ -284,7 +204,7 @@ module.exports = {
             })
         }
 
-        if (reqUser.passwordNew !== reqUser.passwordRepeatNew) {
+        if (req.body.passwordNew !== req.body.passwordRepeatNew) {
             errors.passwordNew = 'Passwords do not match!'
             errors.passwordRepeatNew = 'Passwords do not match!'
             return res.status(200).json({
@@ -296,19 +216,7 @@ module.exports = {
         }
 
         try {
-            let user = await usersService
-                .getUserByUsernameAsync(authUser.username)
-
-            if (user == null) {
-                return res.status(404).json({
-                    errors: errors,
-                    data: {},
-                    message: 'User not found!',
-                    success: false
-                })
-            }
-
-            if (!user.authenticate(reqUser.passwordCurrent)) {
+            if (!paramIdUser.authenticate(req.body.passwordCurrent)) {
                 errors.passwordCurrent = 'Invalid password!'
                 return res.status(200).json({
                     errors: errors,
@@ -320,55 +228,35 @@ module.exports = {
 
             const salt = encryption.generateSalt()
             const hashedPass = encryption
-                .generateHashedPassword(salt, reqUser.passwordNew)
-            console.log(reqUser.passwordNew, hashedPass)
+                .generateHashedPassword(salt, req.body.passwordNew)
             const data = {
                 hashedPass,
                 salt
             }
 
-            user = await usersService.editUserAsync(id, data)
+            paramIdUser = await usersService.editUserAsync(paramIdUser, data)
 
             return res.status(200).json({
                 errors: errors,
-                data: user,
+                data: dataUser(paramIdUser),
                 message: 'Edit password successful!',
                 success: true
             })
 
         } catch (err) {
-            console.log('ERROR_NAME:', err.name)
-            console.log('ERROR_MESSAGE:', err.message)
-            return res.status(200).json({
-                errors: errors,
-                data: {},
-                message: 'Edit password failed!',
-                success: false
-            })
-
+            catchErr(res, err)
         }
     },
     actionEditRolesGet: async (req, res) => {
         const errors = {}
-        const id = req.params.id
+        const paramIdUser = req.paramIdUser
 
         try {
-            const user = await usersService.getUserByIdAsync(id)
-
-            if (user == null) {
-                return res.status(404).json({
-                    errors: errors,
-                    data: {},
-                    message: 'User not found!',
-                    success: false
-                })
-            }
-
-            const roles = [];
+            const roles = []
             const allRoles = constants.USER_ROLES
             const availableRoles = constants.USER_ROLES
-                .filter(elem => -1 === user.roles.indexOf(elem))
-            const currentRoles = user.roles
+                .filter(elem => -1 === paramIdUser.roles.indexOf(elem))
+            const currentRoles = paramIdUser.roles
             const selectedRoles = currentRoles
             const data = {
                 roles,
@@ -385,32 +273,14 @@ module.exports = {
                 success: true
             })
         } catch (err) {
-            console.log('ERROR_NAME:', err.name)
-            console.log('ERROR_MESSAGE:', err.message)
-            return res.status(200).json({
-                errors: errors,
-                data: {},
-                message: 'Get user roles failed!',
-                success: false
-            })
+            catchErr(res, err)
         }
     },
     actionEditRolesPost: async (req, res) => {
         const errors = {}
-        const id = req.params.id
+        let paramIdUser = req.paramIdUser
 
         try {
-            let user = await usersService.getUserByIdAsync(id)
-
-            if (user == null) {
-                return res.status(404).json({
-                    errors: errors,
-                    data: {},
-                    message: 'User not found!',
-                    success: false
-                })
-            }
-
             const roles = req.body.roles
             if (roles == null) {
                 return res.status(400).json({
@@ -422,50 +292,42 @@ module.exports = {
             }
 
             const data = { roles }
-            user = await usersService.editUserAsync(id, data)
+            paramIdUser = await usersService.editUserAsync(paramIdUser, data)
 
             return res.status(200).json({
                 errors: errors,
-                data: user,
+                data: dataUser(paramIdUser),
                 message: 'Edit roles successful!',
                 success: true
             })
 
         } catch (err) {
-            console.log('ERROR_NAME:', err.name)
-            console.log('ERROR_MESSAGE:', err.message)
-            return res.status(200).json({
-                errors: errors,
-                data: {},
-                message: 'Edit roles failed!',
-                success: false
-            })
+            catchErr(res, err)
         }
     },
     actionSignInPost: async (req, res) => {
         const errors = {}
-        const reqUser = req.body
 
         try {
             const user = await usersService
-                .getUserByUsernameAsync(reqUser.username)
+                .getUserByUsernameAsync(req.body.username)
 
             if (user == null) {
-                errors.username = 'Invalid username!'
-                return res.status(200).json({
-                    errors: errors,
+                errors.credentials = 'Invalid credentials!'
+                return res.status(401).json({
+                    errors: { errors },
                     data: {},
-                    message: 'Login failed!',
+                    message: 'Invalid credentials!',
                     success: false
                 })
             }
 
-            if (!user.authenticate(reqUser.password)) {
-                errors.password = 'Invalid password!'
-                return res.status(200).json({
+            if (!user.authenticate(req.body.password)) {
+                errors.credentials = 'Invalid credentials!'
+                return res.status(401).json({
                     errors: errors,
                     data: {},
-                    message: 'Password authentication failed!',
+                    message: 'Invalid credentials!',
                     success: false
                 })
             }
@@ -497,34 +359,26 @@ module.exports = {
                 })
             })
         } catch (err) {
-            console.log('ERROR_NAME:', err.name)
-            console.log('ERROR_MESSAGE:', err.message)
-            return res.status(200).json({
-                errors: errors,
-                data: {},
-                message: 'Login failed!',
-                success: false
-            })
+            catchErr(res, err)
         }
 
     },
     actionSignUpPost: async (req, res) => {
         const errors = {}
-        const reqUser = req.body
 
         const isUsernameTaken = await usersService
-            .isUsernameTaken(reqUser.username)
+            .isUsernameTaken(req.body.username)
         if (isUsernameTaken) {
             errors.username = 'Username taken!'
         }
 
         const isEmailTaken = await usersService
-            .isEmailTaken(reqUser.email)
+            .isEmailTaken(req.body.email)
         if (isEmailTaken) {
             errors.email = 'Email taken!'
         }
 
-        if (reqUser.password !== reqUser.passwordRepeat) {
+        if (req.body.password !== req.body.passwordRepeat) {
             errors.password = 'Passwords do not match!'
             errors.passwordRepeat = 'Passwords do not match!'
         }
@@ -541,16 +395,16 @@ module.exports = {
         try {
             const salt = encryption.generateSalt()
             const hashedPass = encryption
-                .generateHashedPassword(salt, reqUser.password)
+                .generateHashedPassword(salt, req.body.password)
 
             const data = {
-                email: reqUser.email,
+                email: req.body.email,
                 hashedPass: hashedPass,
                 salt: salt,
-                username: reqUser.username
+                username: req.body.username
             }
 
-            let user = await usersService.createUserAsync(data)
+            const user = await usersService.createUserAsync(data)
 
             jwt.sign({ authKey: user._id }, constants.SECRET_KEY, (err, authToken) => {
                 if (err) {
@@ -578,14 +432,27 @@ module.exports = {
                 })
             })
         } catch (err) {
-            console.log('ERROR_NAME:', err.name)
-            console.log('ERROR_MESSAGE:', err.message)
-            return res.status(200).json({
-                errors: errors,
-                data: {},
-                message: 'Registration failed!',
-                success: false
-            })
+            catchErr(res, err)
         }
+    }
+}
+
+function catchErr(res, err) {
+    console.log('ERROR_NAME:', err.name)
+    console.log('ERROR_MESSAGE:', err.message)
+    return res.status(500).json({
+        errors: {},
+        data: {},
+        message: 'Server error!',
+        success: false
+    })
+}
+
+function dataUser(user) {
+    return {
+        _id: user._id,
+        email: user.email,
+        roles: user.roles,
+        username: user.username
     }
 }

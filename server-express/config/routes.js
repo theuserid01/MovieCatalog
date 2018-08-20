@@ -16,21 +16,25 @@ module.exports = (app) => {
     app.get(
         '/movies/delete/:id',
         auth.isValidParamId,
+        auth.isValidParamIdMovie,
         auth.isInRole(constants.ADMINISTRATOR_ROLE),
         moviesController.actionCrudGet)
     app.post(
         '/movies/delete/:id',
         auth.isValidParamId,
+        auth.isValidParamIdMovie,
         auth.isInRole(constants.ADMINISTRATOR_ROLE),
         moviesController.actionDeletePost)
     app.get(
         '/movies/edit/:id',
         auth.isValidParamId,
+        auth.isValidParamIdMovie,
         auth.isAuthenticated,
         moviesController.actionCrudGet)
     app.post(
         '/movies/edit/:id',
         auth.isValidParamId,
+        auth.isValidParamIdMovie,
         auth.isAuthenticated,
         moviesController.actionEditPost)
 
@@ -43,44 +47,51 @@ module.exports = (app) => {
     app.get(
         '/users/delete/:id',
         auth.isValidParamId,
+        auth.isValidParamIdUser,
         auth.isInRole(constants.ADMINISTRATOR_ROLE),
         usersController.actionDeleteGet
     )
     app.post(
         '/users/delete/:id',
         auth.isValidParamId,
+        auth.isValidParamIdUser,
         auth.isInRole(constants.ADMINISTRATOR_ROLE),
         usersController.actionDeletePost
     )
     app.get(
         '/users/edit/details/:id',
-        auth.isValidParamId,
         auth.isAuthenticated,
+        auth.isValidParamId,
+        auth.isValidParamIdUser,
         usersController.actionEditDetailsGet
     )
     app.post(
         '/users/edit/details/:id',
-        auth.isValidParamId,
         auth.isAuthenticated,
+        auth.isValidParamId,
+        auth.isValidParamIdUser,
         auth.isValidUsername,
         auth.isValidEmail,
         usersController.actionEditDetailsPost
     )
     app.post(
         '/users/edit/password/:id',
-        auth.isValidParamId,
         auth.isAuthenticated,
+        auth.isValidParamId,
+        auth.isValidParamIdUser,
         usersController.actionEditPasswordPost
     )
     app.get(
         '/users/edit/roles/:id',
         auth.isValidParamId,
+        auth.isValidParamIdUser,
         auth.isInRole(constants.ADMINISTRATOR_ROLE),
         usersController.actionEditRolesGet
     )
     app.post(
         '/users/edit/roles/:id',
         auth.isValidParamId,
+        auth.isValidParamIdUser,
         auth.isInRole(constants.ADMINISTRATOR_ROLE),
         usersController.actionEditRolesPost
     )

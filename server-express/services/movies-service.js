@@ -10,10 +10,9 @@ const deleteMovieAsync = async (id) => {
     return await movie.remove()
 }
 
-const editMovieAsync = async (id, data) => {
-    const movie = await getMovieByIdAsync(id)
-
-    return await movie.update(data)
+const editMovieAsync = async (movie, data) => {
+    await movie.update(data)
+    return movie
 }
 
 const getAllMoviesAsync = async () => {
