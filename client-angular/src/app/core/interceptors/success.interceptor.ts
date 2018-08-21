@@ -41,11 +41,11 @@ export class SuccessInterceptor implements HttpInterceptor {
 
                 if (res.body.data && (res.body.token || res.body.data.authToken)) {
                     this.setItemsToLocalStorage(res.body.data);
+                    this.router.navigate(['/']);
+                    return;
                 }
 
-                if (!res.url.endsWith('signin')) {
-                    this.tostrService.success(res.body.message, 'Success!');
-                }
+                this.tostrService.success(res.body.message, 'Success!');
 
                 if (this.authService.isAdmin() && res.url.includes('users')) {
                     this.router.navigate(['/users/all']);

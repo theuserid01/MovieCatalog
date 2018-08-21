@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AllModel } from './models/all.model';
-import { MovieModel } from './models/movie.model';
+import { BaseModel } from './models/base.model';
 
 const host = 'http://localhost:5000';
 const allUrl = host + '/movies/all';
@@ -21,15 +21,15 @@ export class MoviesService {
         return this.httpClient.get<AllModel>(allUrl);
     }
 
-    createPost(data: MovieModel) {
+    createPost(data: BaseModel) {
         return this.httpClient.post(createUrl, data);
     }
 
     editGet(id: string) {
-        return this.httpClient.get<MovieModel>(editUrl + id);
+        return this.httpClient.get<BaseModel>(editUrl + id);
     }
 
-    editPost(id: string, data: MovieModel) {
+    editPost(id: string, data: BaseModel) {
         return this.httpClient.post(editUrl + id, data);
     }
 
@@ -37,7 +37,11 @@ export class MoviesService {
         return this.httpClient.get(deleteUrl + id);
     }
 
-    deletePost(id: string, data: MovieModel) {
+    deletePost(id: string, data: BaseModel) {
         return this.httpClient.post(deleteUrl + id, data);
+    }
+
+    detailsGet(id: string) {
+        return this.httpClient.get<BaseModel>(allUrl + '/' + id);
     }
 }

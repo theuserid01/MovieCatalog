@@ -6,9 +6,18 @@ const usersController = require('../controllers/users-controller')
 
 module.exports = (app) => {
     app.all('/', moviesController.actionIndex)
-    app.get('/movies/all', moviesController.actionIndex)
 
     // Movies routes
+    app.get(
+        '/movies/all',
+        moviesController.actionIndex
+    )
+    app.get(
+        '/movies/all/:id',
+        auth.isValidParamId,
+        auth.isValidParamIdMovie,
+        moviesController.actionIndex
+    )
     app.post(
         '/movies/create',
         auth.isAuthenticated,

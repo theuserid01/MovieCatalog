@@ -1,4 +1,3 @@
-import { Location } from '@angular/common';
 import { Component, OnInit, Input, Injector, OnChanges } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -56,7 +55,6 @@ export class UserFormComponent extends AbstractComponent implements OnInit, OnCh
 
     constructor(
         private fb: FormBuilder,
-        private _location: Location,
         public injector: Injector
     ) {
         super(injector);
@@ -80,23 +78,23 @@ export class UserFormComponent extends AbstractComponent implements OnInit, OnCh
     }
 
     cancel() {
-        this._location.back();
+        this.location.back();
     }
 
     private groupFormModelPropsFromParent() {
         Object.keys(this.formModel)
-        .forEach(key => {
-            if (!fbProps.hasOwnProperty(key)) {
-                return;
-            }
-            this.fbGroup[key] = [
-                {
-                    value: this.formModel[key],
-                    disabled: this.attr.isFieldDisabled
-                },
-                fbProps[key].validators
-            ];
-        });
+            .forEach(key => {
+                if (!fbProps.hasOwnProperty(key)) {
+                    return;
+                }
+                this.fbGroup[key] = [
+                    {
+                        value: this.formModel[key],
+                        disabled: this.attr.isFieldDisabled
+                    },
+                    fbProps[key].validators
+                ];
+            });
     }
 
     private passwordMatchValidator(c: AbstractControl, other: AbstractControl) {

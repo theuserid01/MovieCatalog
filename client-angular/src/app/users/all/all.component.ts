@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Params } from '@angular/router';
 
 import { UserModel } from '../models/user.model';
-import { UsersService } from '../users.service';
 import { UsersPaginationModel } from '../models/users-pagination.model';
+
+import { AbstractComponent } from '../shared/abstract.component';
 
 @Component({
     selector: 'app-all',
     templateUrl: './all.component.html',
     styleUrls: ['./all.component.css']
 })
-export class AllComponent implements OnInit {
+export class AllComponent extends AbstractComponent implements OnInit {
     public page: string;
     public search: string;
     public searchForm: FormGroup;
@@ -19,11 +20,11 @@ export class AllComponent implements OnInit {
     public usersPagination: UsersPaginationModel;
 
     constructor(
-        private activatedRoute: ActivatedRoute,
         private fb: FormBuilder,
-        private router: Router,
-        private usersService: UsersService
-    ) { }
+        public injector: Injector
+    ) {
+        super(injector);
+    }
 
     ngOnInit() {
         // subscribe to router event
@@ -46,7 +47,7 @@ export class AllComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     if (!res.success) {
-                        console.log(res.message)
+                        console.log(res.message);
                         return;
                     }
                     this.users = res.data.users;

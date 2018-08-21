@@ -15,6 +15,10 @@ const moviesRoutes: Routes = [
         component: AllComponent
     },
     {
+        path: 'all/:id',
+        component: AllComponent
+    },
+    {
         path: 'create',
         canActivate: [AuthGuard],
         component: CreateComponent

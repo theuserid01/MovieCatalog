@@ -3,7 +3,7 @@ const moviesService = require('../services/movies-service')
 module.exports = {
     actionIndex: async (req, res) => {
         const errors = {}
-        let id = req.body.id
+        let id = req.params.id
         let movies = []
         let movieDetails = {}
 
@@ -77,15 +77,7 @@ module.exports = {
         }
 
         try {
-            let data = {
-                color: req.body.color,
-                countries: req.body.countries,
-                genres: req.body.genres,
-                imageUrl: req.body.imageUrl,
-                languages: req.body.languages,
-                productionYear: req.body.productionYear,
-                title: req.body.title
-            }
+            const data = dataMovie(req)
 
             const movie = await moviesService.createMovieAsync(data)
 
@@ -154,16 +146,7 @@ module.exports = {
         }
 
         try {
-            const data = {
-                colors: req.body.colors,
-                countries: req.body.countries,
-                genres: req.body.genres,
-                imageUrl: req.body.imageUrl,
-                languages: req.body.languages,
-                productionYear: req.body.productionYear,
-                synopsis: req.body.synopsis,
-                title: req.body.title
-            }
+            const data = dataMovie(req)
 
             movie = await moviesService.editMovieAsync(movie, data)
 
@@ -189,4 +172,17 @@ function catchErr(res, err) {
         message: 'Server error!',
         success: false
     })
+}
+
+function dataMovie(req) {
+    return {
+        colors: req.body.colors,
+        countries: req.body.countries,
+        genres: req.body.genres,
+        imageUrl: req.body.imageUrl,
+        languages: req.body.languages,
+        productionYear: req.body.productionYear,
+        synopsis: req.body.synopsis,
+        title: req.body.title
+    }
 }

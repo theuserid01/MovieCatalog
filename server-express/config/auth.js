@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const mongoose = require('mongoose')
 
 const constants = require('../common/constants')
 const movieService = require('../services/movies-service')
@@ -94,11 +95,19 @@ const isValidParamId = async (req, res, next) => {
     const id = req.params.id
 
     if (id === 'undefined') {
-        console.log('bla', id)
         return res.status(400).json({
             errors: errors,
             data: {},
-            message: 'Param id in url is undefined!',
+            message: 'Missing param id in url!',
+            success: false
+        })
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({
+            errors: errors,
+            data: {},
+            message: 'Invalid param id in url!',
             success: false
         })
     }

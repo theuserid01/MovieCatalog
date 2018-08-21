@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { moviesComponents } from '.';
 import { MoviesRoutingModule } from './movies-routing.module';
@@ -9,13 +9,14 @@ import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
     declarations: [
-        ...moviesComponents
+        ...moviesComponents,
     ],
     imports: [
         CommonModule,
         MoviesRoutingModule,
         ReactiveFormsModule,
-        SharedModule
+        SharedModule,
+        FormsModule
     ],
     providers: [
         MoviesService

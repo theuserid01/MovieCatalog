@@ -51,7 +51,7 @@ const getAllUsersAsync = async (countUsers, search, page, pageSize) => {
     return await query
 }
 
-// Do not exclude hashPass and salt
+// Do not exclude hashedPass and salt
 const getUserByIdAsync = async (id) => {
     return await User
         .findById(id)

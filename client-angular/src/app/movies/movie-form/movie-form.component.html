@@ -1,0 +1,128 @@
+<section class="d-flex flex-row justify-content-center">
+    <article class="col-4">
+        <h1 class="text-center">{{attr.title}}</h1>
+        <form
+            *ngIf="movieForm"
+            [formGroup]="movieForm"
+            (ngSubmit)="onSubmitHandler(movieForm.value)"
+        >
+            <div class="col-12 form-group p-0">
+                <label
+                    class="form-control-label"
+                    for="title"
+                >Title</label>
+                <input
+                    formControlName="title"
+                    type="text"
+                    class="form-control"
+                    [class.is-invalid]="movieForm.get('title').touched && errors.title"
+                    id="title"
+                    placeholder="Enter title"
+                />
+                <div
+                    *ngIf="movieForm.get('title').touched && errors.title"
+                    class="invalid-feedback"
+                >{{errors.title ? errors.title : 'Title is Required!'}}</div>
+            </div>
+            <div class="col-12 form-group p-0">
+                <label
+                    class="form-control-label"
+                    for="productionYear"
+                >Production Year</label>
+                <input
+                    formControlName="productionYear"
+                    type="number"
+                    class="form-control"
+                    [class.is-invalid]="movieForm.get('productionYear').touched && errors.productionYear"
+                    id="productionYear"
+                    placeholder="Enter production year"
+                />
+                <div
+                    *ngIf="movieForm.get('productionYear').touched && errors.productionYear"
+                    class="invalid-feedback"
+                >{{errors.productionYear ? errors.productionYear : 'Production year is Required!'}}</div>
+            </div>
+            <div class="col-12 form-group p-0">
+                <label
+                    class="form-control-label"
+                    for="countries"
+                >Countries</label>
+                <input
+                    formControlName="countries"
+                    type="text"
+                    class="form-control"
+                    id="countries"
+                    placeholder="Enter countries"
+                />
+            </div>
+            <div class="col-12 form-group p-0">
+                <label
+                    class="form-control-label"
+                    for="genres"
+                >Genres</label>
+                <input
+                    formControlName="genres"
+                    type="text"
+                    class="form-control"
+                    id="genres"
+                    placeholder="Enter genres"
+                />
+            </div>
+            <div class="col-12 form-group p-0">
+                <label
+                    class="form-control-label"
+                    for="languages"
+                >Languages</label>
+                <input
+                    formControlName="languages"
+                    type="text"
+                    class="form-control"
+                    id="languages"
+                    placeholder="Enter languages"
+                />
+            </div>
+            <div class="col-12 form-group p-0">
+                <label
+                    class="form-control-label"
+                    for="imageUrl"
+                >Image Url</label>
+                <input
+                    formControlName="imageUrl"
+                    type="url"
+                    class="form-control"
+                    id="imageUrl"
+                    placeholder="Enter image url"
+                />
+            </div>
+            <div class="col-12 form-group p-0">
+                <label
+                    class="form-control-label"
+                    for="synopsis"
+                >Synopsis</label>
+                <textarea
+                    formControlName="synopsis"
+                    type="text"
+                    class="form-control"
+                    id="synopsis"
+                    placeholder="Enter synopsis"
+                    rows="5"
+                ></textarea>
+            </div>
+            <div
+                class="btn-group d-flex"
+                role="group"
+            >
+                <button
+                    (click)="cancel()"
+                    type="button"
+                    class="btn btn-outline-secondary w-100"
+                >Cancel</button>
+                <button
+                    type="submit"
+                    class="btn {{attr.btnColor}} w-100"
+                    [disabled]="movieForm.invalid || isSubmitting"
+                >{{attr.btnText}}</button>
+            </div>
+        </form>
+    </article>
+</section>
