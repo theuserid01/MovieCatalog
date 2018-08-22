@@ -8,7 +8,10 @@
                 placeholder="Search by Genre OR Title"
             />
         </div>
-        <div class="div-thumbs">
+        <div
+            [@fadeInThumbs]="movies.length"
+            class="div-thumbs"
+        >
             <article
                 *ngFor="let m of movies | filter : { genres: search, title: search } : false"
                 (click)="onClickArticle(m._id)"
@@ -26,7 +29,7 @@
         *ngIf="movieDetails; let md"
         class="section-right"
     >
-        <div [@fadeIn]="state">
+        <div [@fadeInDetails]="state">
             <h4>{{md.title}} ({{md.productionYear}})</h4>
             <article class="article-info">
                 <div class="div-poster">

@@ -1,13 +1,15 @@
 import {
     animate,
     keyframes,
+    query,
+    stagger,
     style,
     transition,
     trigger
 } from '@angular/animations';
 
 const animations = [
-    trigger('fadeIn', [
+    trigger('fadeInDetails', [
         transition('init => fadeIn', [
             animate('1000ms ease', keyframes([
                 style({
@@ -34,6 +36,30 @@ const animations = [
                     opacity: 1,
                     transform: 'translateX(0)'
                 })
+            ]))
+        ])
+    ]),
+    trigger('fadeInThumbs', [
+        transition('* => *', [
+            query('img', style({ opacity: 0 }), { optional: true }),
+            query('img', stagger('100ms', [
+                animate('300ms ease-in', keyframes([
+                    style({
+                        offset: 0,
+                        opacity: 0,
+                        transform: 'translateX(-75px)'
+                    }),
+                    style({
+                        offset: 0.3,
+                        opacity: 0.5,
+                        transform: 'translateX(35px)'
+                    }),
+                    style({
+                        offset: 1,
+                        opacity: 1,
+                        transform: 'translateX(0)'
+                    })
+                ]))
             ]))
         ])
     ])
