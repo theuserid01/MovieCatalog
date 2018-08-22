@@ -2,9 +2,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgHttpLoaderModule } from 'ng-http-loader';
 import { ToastrModule } from 'ngx-toastr';
 // Components
 import { AppComponent } from './app.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+// Modules
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { MoviesModule } from './movies/movies.module';
@@ -19,6 +22,9 @@ import { SuccessInterceptor } from './core/interceptors/success.interceptor';
     declarations: [
         AppComponent
     ],
+    entryComponents: [
+        SpinnerComponent
+    ],
     imports: [
         AppRoutingModule,
         BrowserModule,
@@ -26,6 +32,7 @@ import { SuccessInterceptor } from './core/interceptors/success.interceptor';
         CoreModule,
         HttpClientModule,
         MoviesModule,
+        NgHttpLoaderModule,
         SharedModule,
         ToastrModule.forRoot(),
         UsersModule

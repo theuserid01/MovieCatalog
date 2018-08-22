@@ -5,17 +5,20 @@ import { AllModel } from '../models/all.model';
 
 import { AuthService } from '../../core/auth.service';
 import { DetailsModel } from '../models/details.model';
+import { animations } from './animations';
 
 @Component({
     selector: 'app-all',
     templateUrl: './all.component.html',
-    styleUrls: ['./all.component.css']
+    styleUrls: ['./all.component.css'],
+    animations: animations
 })
 export class AllComponent extends AbstractComponent implements OnInit {
     public filter: string;
     public movies: AllModel;
     public movieDetails: DetailsModel;
     public movieDetailsId: string;
+    public state: string;
 
     constructor(
         public authService: AuthService,
@@ -48,6 +51,7 @@ export class AllComponent extends AbstractComponent implements OnInit {
     }
 
     getDataMovieDetails(id) {
+        this.state = 'init';
         this.moviesService.detailsGet(id)
             .subscribe(
                 (res: any) => {
@@ -56,6 +60,7 @@ export class AllComponent extends AbstractComponent implements OnInit {
                         return;
                     }
                     this.movieDetails = res.data.movieDetails;
+                    this.state = 'fadeIn';
                 },
                 (err: any) => {
                     console.log(err);

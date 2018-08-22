@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 
 @Component({
     selector: 'app-root',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    title = 'app';
+    public title = 'app';
+    public spinnerComponent = SpinnerComponent;
 }

@@ -26,89 +26,92 @@
         *ngIf="movieDetails; let md"
         class="section-right"
     >
-        <h4>{{md.title}} ({{md.productionYear}})</h4>
-        <article class="article-info">
-            <div class="div-poster">
-                <img
-                    src="{{md.imageUrl}}"
-                    alt="{{md.title}}"
-                />
-            </div>
-            <div class="div-info">
-                <div class="tbl-row">
-                    <h6>Genre</h6>
-                    <p>{{md.genres ? md.genres : 'None'}}</p>
+        <div [@fadeIn]="state">
+            <h4>{{md.title}} ({{md.productionYear}})</h4>
+            <article class="article-info">
+                <div class="div-poster">
+                    <img
+                        src="{{md.imageUrl}}"
+                        alt="{{md.title}}"
+                    />
                 </div>
-                <div class="tbl-row">
-                    <h6>Countries</h6>
-                    <p>{{md.countries ? md.countries : 'None'}}</p>
+                <div class="div-info">
+                    <div class="tbl-row">
+                        <h6>Genre</h6>
+                        <p>{{md.genres ? md.genres : 'None'}}</p>
+                    </div>
+                    <div class="tbl-row">
+                        <h6>Countries</h6>
+                        <p>{{md.countries ? md.countries : 'None'}}</p>
+                    </div>
+                    <div class="tbl-row">
+                        <h6>Languages</h6>
+                        <p>{{md.languages ? md.languages : 'None'}}</p>
+                    </div>
+                    <div class="tbl-row">
+                        <h6>Color</h6>
+                        <p>(// TODO)</p>
+                    </div>
+                    <div class="tbl-row">
+                        <h6>Budget</h6>
+                        <p>(// TODO)</p>
+                    </div>
+                    <div class="tbl-row">
+                        <h6>Gross</h6>
+                        <p>(// TODO)</p>
+                    </div>
+                    <div class="tbl-row">
+                        <h6>IMDb Rating</h6>
+                        <p>(// TODO)</p>
+                    </div>
+                    <div class="tbl-row">
+                        <h6>Rotten Tomatoes Score</h6>
+                        <p>(// TODO)</p>
+                    </div>
+                    <div class="tbl-row">
+                        <h6>Main Festivals</h6>
+                        <p>(// TODO)</p>
+                    </div>
+                    <div class="tbl-row">
+                        <h6>Release</h6>
+                        <p>(// TODO)</p>
+                    </div>
                 </div>
-                <div class="tbl-row">
-                    <h6>Languages</h6>
-                    <p>{{md.languages ? md.languages : 'None'}}</p>
-                </div>
-                <div class="tbl-row">
-                    <h6>Color</h6>
-                    <p>(// TODO)</p>
-                </div>
-                <div class="tbl-row">
-                    <h6>Budget</h6>
-                    <p>(// TODO)</p>
-                </div>
-                <div class="tbl-row">
-                    <h6>Gross</h6>
-                    <p>(// TODO)</p>
-                </div>
-                <div class="tbl-row">
-                    <h6>IMDb Rating</h6>
-                    <p>(// TODO)</p>
-                </div>
-                <div class="tbl-row">
-                    <h6>Rotten Tomatoes Score</h6>
-                    <p>(// TODO)</p>
-                </div>
-                <div class="tbl-row">
-                    <h6>Main Festivals</h6>
-                    <p>(// TODO)</p>
-                </div>
-                <div class="tbl-row">
-                    <h6>Release</h6>
-                    <p>(// TODO)</p>
-                </div>
-            </div>
-        </article>
-        <article class="article-creq">
-            <h5>Crew</h5>
-            <p>(// TODO)</p>
-        </article>
-        <article class="article-synopsis">
-            <h5>Cast</h5>
-            <p>(// TODO)</p>
-        </article>
-        <article class="article-synopsis">
-            <h5>Synopsis</h5>
-            <p>{{md.synopsis ? md.synopsis : 'None'}}</p>
-        </article>
-        <div
-            *ngIf="authService.isAuthenticated()"
-            class="btn-group d-flex"
-            [class.w-25]="!authService.isAdmin()"
-        >
+            </article>
+            <article class="article-creq">
+                <h5>Crew</h5>
+                <p>(// TODO)</p>
+            </article>
+            <article class="article-synopsis">
+                <h5>Cast</h5>
+                <p>(// TODO)</p>
+            </article>
+            <article class="article-synopsis">
+                <h5>Synopsis</h5>
+                <p>{{md.synopsis ? md.synopsis : 'None'}}</p>
+            </article>
+            <div
+                *ngIf="authService.isAuthenticated()"
+                class="btn-group d-flex"
+                [class.w-25]="!authService.isAdmin()"
+            >
 
-            <a
-                routerLink="/movies/edit/{{md._id}}"
-                class="btn btn-warning w-100"
-                role="button"
-            >Edit
-            </a>
+                <a
+                    routerLink="/movies/edit/{{md._id}}"
+                    class="btn btn-warning w-100"
+                    role="button"
+                >Edit
+                </a>
 
-            <a
-                *ngIf="authService.isAdmin()"
-                routerLink="/movies/delete/{{md._id}}"
-                class="btn btn-danger w-100"
-                role="button"
-            >Delete
-            </a>
+                <a
+                    *ngIf="authService.isAdmin()"
+                    routerLink="/movies/delete/{{md._id}}"
+                    class="btn btn-danger w-100"
+                    role="button"
+                >Delete
+                </a>
+            </div>
         </div>
+
     </section>
 </div>

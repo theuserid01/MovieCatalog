@@ -1,9 +1,8 @@
 section {
     align-items: center;
-    background-color: rgb(38, 50, 56);
+    background-color: #343A40;
     display: flex;
     justify-content: center;
-    margin-top: -40px;
 }
 
 .dbl-spinner {

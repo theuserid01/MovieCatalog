@@ -95,12 +95,16 @@ module.exports = {
     actionCrudGet: async (req, res) => {
         const errors = {}
         const movie = req.movie
-        return res.status(200).json({
-            errors: errors,
-            data: movie,
-            message: 'Get movie successful!',
-            success: true
-        })
+        setTimeout(delayForSpinnerTest, 2000)
+        function delayForSpinnerTest() {
+            return res.status(200).json({
+                errors: errors,
+                data: movie,
+                message: 'Get movie successful!',
+                success: true
+            })
+        }
+
     },
     actionDeletePost: async (req, res) => {
         const errors = {}

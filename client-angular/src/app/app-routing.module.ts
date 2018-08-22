@@ -6,7 +6,7 @@ import { UsersModule } from './users/users.module';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 const routes: Routes = [
-    { path: '', pathMatch: 'full', redirectTo: '/movies/all' },
+    { path: '', pathMatch: 'full', redirectTo: '/' },
     { path: 'home', redirectTo: '/movies/all' },
     { path: 'movies', loadChildren: () => MoviesModule },
     { path: 'users', loadChildren: () => UsersModule },
