@@ -1,7 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
 
-import { AbstractComponent } from '../shared/abstract.component';
 import { EditPasswordModel } from '../models/edit-password.model';
+import { AbstractComponent } from '../shared/abstract.component';
 
 @Component({
     selector: 'app-edit-password',

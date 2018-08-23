@@ -3,15 +3,15 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 
-import { BaseModel } from './models/base.model';
-import { AppState } from '../redux/states/app.state';
-
 import {
     ActionMoviesAllGet,
     ActionMoviesDeleteGet,
     ActionMoviesDetailsGet,
     ActionMoviesEditGet
 } from '../redux/actions/movies.actions';
+import { AppState } from '../redux/states/app.state';
+
+import { BaseModel } from './models/base.model';
 
 const host = 'http://localhost:5000';
 const allUrl = host + '/movies/all';

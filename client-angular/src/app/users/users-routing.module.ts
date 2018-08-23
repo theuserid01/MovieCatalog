@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
+// Guards
+import { AdminGuard } from '../core/guards/admin.guard';
+import { AuthGuard } from '../core/guards/auth.guard';
+
 // Components
 import { AllComponent } from './all/all.component';
 import { DeleteComponent } from './delete/delete.component';
@@ -8,9 +13,6 @@ import { EditPasswordComponent } from './edit-password/edit-password.component';
 import { EditRolesComponent } from './edit-roles/edit-roles.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-// Guards
-import { AdminGuard } from '../core/guards/admin.guard';
-import { AuthGuard } from '../core/guards/auth.guard';
 
 const usersRoutes: Routes = [
     {

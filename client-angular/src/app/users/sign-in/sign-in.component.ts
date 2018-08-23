@@ -1,7 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
 
-import { AbstractComponent } from '../shared/abstract.component';
 import { SignInModel } from '../models/sign-in.model';
+import { AbstractComponent } from '../shared/abstract.component';
 
 @Component({
     selector: 'app-sign-in',

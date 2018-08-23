@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
+// Guards
+import { AdminGuard } from '../core/guards/admin.guard';
+import { AuthGuard } from '../core/guards/auth.guard';
+
 // Components
 import { AllComponent } from './all/all.component';
 import { CreateComponent } from './create/create.component';
 import { DeleteComponent } from './delete/delete.component';
 import { EditComponent } from './edit/edit.component';
-// Guards
-import { AdminGuard } from '../core/guards/admin.guard';
-import { AuthGuard } from '../core/guards/auth.guard';
 
 const moviesRoutes: Routes = [
     {

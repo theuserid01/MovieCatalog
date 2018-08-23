@@ -1,12 +1,13 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 
-import { AbstractComponent } from '../shared/abstract.component';
-import { AllModel } from '../models/all.model';
 import { AuthService } from '../../core/auth.service';
-import { DetailsModel } from '../models/details.model';
-import { animations } from './animations';
 import { AppState } from '../../redux/states/app.state';
+import { AllModel } from '../models/all.model';
+import { DetailsModel } from '../models/details.model';
+import { AbstractComponent } from '../shared/abstract.component';
+
+import { animations } from './animations';
 
 @Component({
     selector: 'app-all',

@@ -2,8 +2,8 @@ import { Location } from '@angular/common';
 import { Component, Injector, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { AbstractComponent } from '../shared/abstract.component';
 import { EditRolesModel } from '../models/edit-roles.model';
+import { AbstractComponent } from '../shared/abstract.component';
 
 @Component({
     selector: 'app-edit-roles',

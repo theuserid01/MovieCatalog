@@ -2,22 +2,23 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgHttpLoaderModule } from 'ng-http-loader';
 import { StoreModule } from '@ngrx/store';
+import { NgHttpLoaderModule } from 'ng-http-loader';
 import { ToastrModule } from 'ngx-toastr';
-// Components
-import { AppComponent } from './app.component';
-import { SpinnerComponent } from './shared/spinner/spinner.component';
+
 // Modules
 import { AppRoutingModule } from './app-routing.module';
+// Components
+import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { MoviesModule } from './movies/movies.module';
-import { SharedModule } from './shared/shared.module';
-import { UsersModule } from './users/users.module';
 // Providers
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { SuccessInterceptor } from './core/interceptors/success.interceptor';
+import { MoviesModule } from './movies/movies.module';
 import { appReducers } from './redux/reducers/app.reducers';
+import { SharedModule } from './shared/shared.module';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { UsersModule } from './users/users.module';
 
 @NgModule({
     bootstrap: [AppComponent],

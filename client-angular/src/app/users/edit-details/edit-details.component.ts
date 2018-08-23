@@ -1,7 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
 
-import { AbstractComponent } from '../shared/abstract.component';
 import { BaseModel } from '../models/base.model';
+import { AbstractComponent } from '../shared/abstract.component';
 
 @Component({
     selector: 'app-edit-details',
@@ -42,7 +42,7 @@ export class EditDetailsComponent extends AbstractComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     if (!res.success) {
-                        console.log(res.message)
+                        console.log(res.message);
                         return;
                     }
                     this.formModel = res.data;

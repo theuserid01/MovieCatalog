@@ -1,9 +1,9 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 
-import { AbstractComponent } from '../shared/abstract.component';
-import { BaseModel } from '../models/base.model';
 import { AppState } from '../../redux/states/app.state';
+import { BaseModel } from '../models/base.model';
+import { AbstractComponent } from '../shared/abstract.component';
 
 @Component({
     selector: 'app-delete',

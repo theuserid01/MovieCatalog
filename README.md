@@ -3,10 +3,10 @@
 Single-page application for cataloging Blu-ray & DVD movie collection and storing the data on a server.
 ## **Built With**
 - Client-side [Angular](https://angular.io/)<br />
-    Cool design with animation supercharged by Bootstrap.<br />
-    Notifications handled by Toastr.<br />
+    Cool design with animations supercharged by Bootstrap.<br />
+    Main features: guards, interceptors, notifications, reactive forms, redux store, spinner, validations.<br />
 - Client-side [React](https://reactjs.org/)<br />
-    Cool design with animation supercharged by Bootstrap.<br />
+    Cool design with animations supercharged by Bootstrap.<br />
     Notifications handled by Toastr.<br />
 - Server-side [Express](https://expressjs.com/)<br />
     The back-end is developed with Express.js, a web app framework for Node.js.<br />
