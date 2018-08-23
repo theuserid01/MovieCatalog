@@ -1,7 +1,9 @@
 import { Component, Injector, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 
 import { AbstractComponent } from '../shared/abstract.component';
 import { BaseModel } from '../models/base.model';
+import { AppState } from '../../redux/states/app.state';
 
 @Component({
     selector: 'app-delete',
@@ -20,7 +22,9 @@ export class DeleteComponent extends AbstractComponent implements OnInit {
     public isFormReady: boolean;
     public isSubmitting: boolean;
 
-    constructor(injector: Injector) {
+    constructor(
+        private store: Store<AppState>,
+        injector: Injector) {
         super(injector);
     }
 
@@ -33,13 +37,22 @@ export class DeleteComponent extends AbstractComponent implements OnInit {
         const id = this.activatedRoute.snapshot.params.id;
         this.moviesService.deleteGet(id)
             .subscribe(
-                (res: any) => {
-                    if (!res.success) {
-                        console.log(res.message);
-                        return;
-                    }
-                    this.formModel = res.data;
-                    this.isFormReady = true;
+                () => {
+                    this.store
+                        .pipe(select(state => state.movies.deleteGet))
+                        .subscribe(
+                            (res: any) => {
+                                if (!res.success) {
+                                    console.log(res.message);
+                                    return;
+                                }
+                                this.formModel = res.data;
+                                this.isFormReady = true;
+                            },
+                            (err: any) => {
+                                console.log(err);
+                            }
+                        );
                 },
                 (err: any) => {
                     console.log(err);

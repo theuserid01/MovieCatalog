@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgHttpLoaderModule } from 'ng-http-loader';
+import { StoreModule } from '@ngrx/store';
 import { ToastrModule } from 'ngx-toastr';
 // Components
 import { AppComponent } from './app.component';
@@ -16,6 +17,7 @@ import { UsersModule } from './users/users.module';
 // Providers
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { SuccessInterceptor } from './core/interceptors/success.interceptor';
+import { appReducers } from './redux/reducers/app.reducers';
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -34,6 +36,7 @@ import { SuccessInterceptor } from './core/interceptors/success.interceptor';
         MoviesModule,
         NgHttpLoaderModule,
         SharedModule,
+        StoreModule.forRoot(appReducers),
         ToastrModule.forRoot(),
         UsersModule
     ],

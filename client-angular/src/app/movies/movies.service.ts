@@ -1,40 +1,50 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
 
-import { AllModel } from './models/all.model';
 import { BaseModel } from './models/base.model';
+import { AppState } from '../redux/states/app.state';
+
+import {
+    ActionMoviesAllGet,
+    ActionMoviesDeleteGet,
+    ActionMoviesDetailsGet,
+    ActionMoviesEditGet
+} from '../redux/actions/movies.actions';
 
 const host = 'http://localhost:5000';
 const allUrl = host + '/movies/all';
 const createUrl = host + '/movies/create';
-const editUrl = host + '/movies/edit/';
 const deleteUrl = host + '/movies/delete/';
+const editUrl = host + '/movies/edit/';
 
 @Injectable()
 export class MoviesService {
 
     constructor(
-        private httpClient: HttpClient
+        private httpClient: HttpClient,
+        private store: Store<AppState>
     ) { }
 
     allGet() {
-        return this.httpClient.get<AllModel>(allUrl);
+        return this.httpClient
+            .get(allUrl)
+            .pipe(map((res: any) => {
+                this.store.dispatch(new ActionMoviesAllGet(res));
+            }));
     }
 
     createPost(data: BaseModel) {
         return this.httpClient.post(createUrl, data);
     }
 
-    editGet(id: string) {
-        return this.httpClient.get<BaseModel>(editUrl + id);
-    }
-
-    editPost(id: string, data: BaseModel) {
-        return this.httpClient.post(editUrl + id, data);
-    }
-
     deleteGet(id: string) {
-        return this.httpClient.get(deleteUrl + id);
+        return this.httpClient
+            .get(deleteUrl + id)
+            .pipe(map((res: any) => {
+                this.store.dispatch(new ActionMoviesDeleteGet(res));
+            }));
     }
 
     deletePost(id: string, data: BaseModel) {
@@ -42,6 +52,22 @@ export class MoviesService {
     }
 
     detailsGet(id: string) {
-        return this.httpClient.get<BaseModel>(allUrl + '/' + id);
+        return this.httpClient
+            .get(allUrl + '/' + id)
+            .pipe(map((res: any) => {
+                this.store.dispatch(new ActionMoviesDetailsGet(res));
+            }));
+    }
+
+    editGet(id: string) {
+        return this.httpClient
+            .get(editUrl + id)
+            .pipe(map((res: any) => {
+                this.store.dispatch(new ActionMoviesEditGet(res));
+            }));
+    }
+
+    editPost(id: string, data: BaseModel) {
+        return this.httpClient.post(editUrl + id, data);
     }
 }

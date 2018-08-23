@@ -43,7 +43,7 @@ const animations = [
         transition('* => *', [
             query('img', style({ opacity: 0 }), { optional: true }),
             query('img', stagger('100ms', [
-                animate('300ms ease-in', keyframes([
+                animate('200ms ease-in', keyframes([
                     style({
                         offset: 0,
                         opacity: 0,

@@ -6,7 +6,6 @@ import { EditPasswordModel } from './models/edit-password.model';
 import { EditRolesModel } from './models/edit-roles.model';
 import { SignInModel } from './models/sign-in.model';
 import { SignUpModel } from './models/sign-up.model';
-import { UserModel } from './models/user.model';
 
 const host = 'http://localhost:5000';
 const allUrl = host + '/users/all';
@@ -25,11 +24,11 @@ export class UsersService {
     ) { }
 
     allGet(query: string) {
-        return this.httpClient.get<UserModel>(allUrl + query);
+        return this.httpClient.get(allUrl + query);
     }
 
     editDetailsGet(id: string) {
-        return this.httpClient.get<BaseModel>(editDetailsUrl + id);
+        return this.httpClient.get(editDetailsUrl + id);
     }
 
     editDetailsPost(id: string, data: BaseModel) {

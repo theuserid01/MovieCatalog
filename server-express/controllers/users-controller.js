@@ -78,9 +78,11 @@ module.exports = {
         const paramIdUser = req.paramIdUser
 
         const authTokenUser = req.authTokenUser
+        const authId = JSON.stringify(authTokenUser._id)
+        const paramId = JSON.stringify(paramIdUser._id)
         const isNotAdmin = authTokenUser
             .roles.indexOf(constants.ADMINISTRATOR_ROLE) === -1 &&
-            authTokenUser._id !== paramIdUser._id
+            authId !== paramId
         if (isNotAdmin) {
             return res.status(403).json({
                 errors: errors,
@@ -102,9 +104,11 @@ module.exports = {
         let paramIdUser = req.paramIdUser
 
         const authTokenUser = req.authTokenUser
+        const authId = JSON.stringify(authTokenUser._id)
+        const paramId = JSON.stringify(paramIdUser._id)
         const isNotAdmin = authTokenUser
             .roles.indexOf(constants.ADMINISTRATOR_ROLE) === -1 &&
-            authTokenUser._id !== paramIdUser._id
+            authId !== paramId
         if (isNotAdmin) {
             return res.status(403).json({
                 errors: errors,
