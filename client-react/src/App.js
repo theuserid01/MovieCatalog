@@ -3,22 +3,23 @@ import { Route, Switch, withRouter } from 'react-router-dom'
 
 import observer from './services/observer'
 
-import CreatePage from './components/Movies/CreatePage'
-import HomePage from './components/Home/HomePage'
-import LoginPage from './components/Users/LoginPage'
-import MoviesDeletePage from './components/Movies/DeletePage'
-import MoviesEditPage from './components/Movies/EditPage'
-import NotFound from './components/Common/NotFound'
-import RegisterPage from './components/Users/RegisterPage'
-import UsersPage from './components/Users/UsersPage'
-import UsersEditDetailsPage from './components/Users/EditDetailsPage'
-import UsersEditRolesPage from './components/Users/EditRolesPage'
-import UsersEditPasswordPage from './components/Users/EditPasswordPage'
-import UsersDeletePage from './components/Users/DeletePage'
+import MoviesAllPage from './components/movies/AllPage'
+import MoviesCreatePage from './components/movies/CreatePage'
+import MoviesDeletePage from './components/movies/DeletePage'
+import MoviesEditPage from './components/movies/EditPage'
 
-import AdminRoute from './components/Common/AdminRoute'
-import AuthRoute from './components/Common/AuthRoute'
-import Navbar from './components/Common/Navbar'
+import UsersAllPage from './components/users/AllPage'
+import UsersDeletePage from './components/users/DeletePage'
+import UsersEditDetailsPage from './components/users/EditDetailsPage'
+import UsersEditPasswordPage from './components/users/EditPasswordPage'
+import UsersEditRolesPage from './components/users/EditRolesPage'
+import UsersSignInPage from './components/users/SignInPage'
+import UsersSignUpPage from './components/users/SignUpPage'
+
+import AdminRoute from './components/common/AdminRoute'
+import AuthRoute from './components/common/AuthRoute'
+import Navbar from './components/common/Navbar'
+import NotFound from './components/common/NotFound'
 
 class App extends React.Component {
     constructor(props) {
@@ -76,21 +77,22 @@ class App extends React.Component {
                 </header>
                 <main>
                     <Switch>
-                        <Route exact path="/" component={HomePage} user={this.state} />
-                        <Route path="/movies/all" component={HomePage} user={this.state} />
-                        <Route path="/users/login" component={LoginPage} />
-                        <Route path="/users/register" component={RegisterPage} />
-                        (// Admin Routes)
-                        <AdminRoute auth={this.state.isAdmin} path="/admin/users/all" component={UsersPage} />
-                        <AdminRoute auth={this.state.isAdmin} path="/admin/users/edit/details/:id" component={UsersEditDetailsPage} />
-                        <AdminRoute auth={this.state.isAdmin} path="/admin/users/edit/roles/:id" component={UsersEditRolesPage} />
-                        <AdminRoute auth={this.state.isAdmin} path="/admin/users/delete/:id" component={UsersDeletePage} />
+                        <Route exact path="/" component={MoviesAllPage} user={this.state} />
+                        <Route path="/users/signin" component={UsersSignInPage} />
+                        <Route path="/users/signup" component={UsersSignUpPage} />
+                        (// Movies Routes)
+                        <Route path="/movies/all" component={MoviesAllPage} user={this.state} />
+                        <Route path="/movies/all/:id" component={MoviesAllPage} user={this.state} />
+                        <AuthRoute auth={this.state.isAuthenticated} path="/movies/create" component={MoviesCreatePage} />
                         <AdminRoute auth={this.state.isAdmin} path="/movies/delete/:id" component={MoviesDeletePage} />
-                        (// Authenticated Routes)
-                        <AuthRoute auth={this.state.isAuthenticated} path="/movies/create" component={CreatePage} />
                         <AuthRoute auth={this.state.isAuthenticated} path="/movies/edit/:id" component={MoviesEditPage} />
+                        (// Users Routes)
+                        <AdminRoute auth={this.state.isAdmin} path="/users/all" component={UsersAllPage} />
+                        <AdminRoute auth={this.state.isAdmin} path="/users/delete/:id" component={UsersDeletePage} />
                         <AuthRoute auth={this.state.isAuthenticated} path="/users/edit/details/:id" component={UsersEditDetailsPage} />
                         <AuthRoute auth={this.state.isAuthenticated} path="/users/edit/password/:id" component={UsersEditPasswordPage} />
+                        <AdminRoute auth={this.state.isAdmin} path="/users/edit/details/:id" component={UsersEditDetailsPage} />
+                        <AdminRoute auth={this.state.isAdmin} path="/users/edit/roles/:id" component={UsersEditRolesPage} />
                         <Route component={NotFound} />
                     </Switch>
                 </main>

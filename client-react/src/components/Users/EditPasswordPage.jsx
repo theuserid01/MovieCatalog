@@ -3,7 +3,7 @@ import { Formik, Field as FormikField, Form as FormikForm } from 'formik'
 import { withRouter } from 'react-router-dom'
 import * as yup from 'yup'
 
-import FieldGroup from '../Common/FieldGroup'
+import FieldGroup from '../common/FieldGroup'
 import reqService from '../../services/requests'
 
 const EditPasswordPage = (props) => {
@@ -11,18 +11,18 @@ const EditPasswordPage = (props) => {
         <Formik
             enableReinitialize={true}
             initialValues={{
-                currentPassword: '',
-                newPassword: '',
-                repeatNewPassword: ''
+                passwordCurrent: '',
+                passwordNew: '',
+                passwordRepeatNew: ''
             }}
             validationSchema={
                 yup.object().shape({
-                    currentPassword: yup.string()
+                    passwordCurrent: yup.string()
                         .required('Password is required!'),
-                    newPassword: yup.string()
+                    passwordNew: yup.string()
                         .required('Password is required!'),
-                    repeatNewPassword: yup.string()
-                        .oneOf([yup.ref('newPassword')], 'Passwords do not match!')
+                    passwordRepeatNew: yup.string()
+                        .oneOf([yup.ref('passwordNew')], 'Passwords do not match!')
                         .required('Password is required!'),
                 })
             }
@@ -36,9 +36,9 @@ const EditPasswordPage = (props) => {
                     const id = props.match.params.id
 
                     const data = {
-                        currentPassword: values.currentPassword,
-                        newPassword: values.newPassword,
-                        repeatNewPassword: values.repeatNewPassword
+                        passwordCurrent: values.passwordCurrent,
+                        passwordNew: values.passwordNew,
+                        passwordRepeatNew: values.passwordRepeatNew
                     }
 
                     try {
@@ -70,11 +70,11 @@ const EditPasswordPage = (props) => {
                                 componentType='input'
                                 disabled={false}
                                 label='Current Password'
-                                name='currentPassword'
+                                name='passwordCurrent'
                                 placeholder='Enter current password'
                                 required={false}
                                 type='password'
-                                value={values.currentPassword}
+                                value={values.passwordCurrent}
                             />
                             <FormikField
                                 colWidth='col-12'
@@ -82,11 +82,11 @@ const EditPasswordPage = (props) => {
                                 componentType='input'
                                 disabled={false}
                                 label='New Password'
-                                name='newPassword'
+                                name='passwordNew'
                                 placeholder='Enter new password'
                                 required={false}
                                 type='password'
-                                value={values.newPassword}
+                                value={values.passwordNew}
                             />
                             <FormikField
                                 colWidth='col-12'
@@ -94,11 +94,11 @@ const EditPasswordPage = (props) => {
                                 componentType='input'
                                 disabled={false}
                                 label='Repeat New Password'
-                                name='repeatNewPassword'
+                                name='passwordRepeatNew'
                                 placeholder='Repeat new password'
                                 required={false}
                                 type='password'
-                                value={values.repeatNewPassword}
+                                value={values.passwordRepeatNew}
                             />
                             <div className="btn-group d-flex" role="group">
                                 <button

@@ -120,12 +120,11 @@ export default {
         })
     },
     movieDetailsIndexGet: async (id) => {
-        const res = await fetch(host + '/', {
-            method: 'POST',
+        const res = await fetch(host + '/movies/all/' + id, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id })
+            }
         })
 
         return await res.json()
@@ -148,7 +147,7 @@ export default {
     },
     userDeleteGet: async (id) => {
         const authToken = localStorage.getItem('authToken')
-        const res = await fetch(host + '/admin/users/delete/' + id, {
+        const res = await fetch(host + '/users/delete/' + id, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + authToken,
@@ -160,7 +159,7 @@ export default {
     },
     userDeletePost: async (id, data) => {
         const authToken = localStorage.getItem('authToken')
-        const res = await fetch(host + '/admin/users/delete/' + id, {
+        const res = await fetch(host + '/users/delete/' + id, {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + authToken,
@@ -215,7 +214,7 @@ export default {
     },
     userEditRolesGet: async (id) => {
         const authToken = localStorage.getItem('authToken')
-        const res = await fetch(host + '/admin/users/edit/roles/' + id, {
+        const res = await fetch(host + '/users/edit/roles/' + id, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + authToken,
@@ -246,7 +245,7 @@ export default {
     },
     userEditRolesPost: async (id, data) => {
         const authToken = localStorage.getItem('authToken')
-        const res = await fetch(host + '/admin/users/edit/roles/' + id, {
+        const res = await fetch(host + '/users/edit/roles/' + id, {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + authToken,
@@ -272,7 +271,7 @@ export default {
     },
     usersGet: async (query) => {
         const authToken = localStorage.getItem('authToken')
-        const res = await fetch(host + '/admin/users/all' + query, {
+        const res = await fetch(host + '/users/all' + query, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + authToken,
@@ -291,7 +290,7 @@ export default {
 
         for (let i = 1; i <= 60; i++) {
             if (i > 1) {
-                let index = i < 10 ? `0${i}` : i
+                let index = i < 10 ? `0${i}` : `${ i}`
                 _id = index
                 email = `user${index}@gmail.com`
                 roles = []

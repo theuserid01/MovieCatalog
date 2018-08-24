@@ -10,7 +10,7 @@ const AdminRoute = ({ component: Component, auth, ...rest }) => (
                 pathname: '/users/login',
                 state: { from: props.location }
             }}
-              />}
+            />}
     />
 )
 

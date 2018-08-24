@@ -35,7 +35,7 @@ export default class Navbar extends React.Component {
                                     <li className="nav-item dropdown">
                                         <Link to="/" className="nav-link dropdown-toggle" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button">Admin</Link>
                                         <div className="dropdown-menu">
-                                            <Link to="/admin/users/all" className="dropdown-item">All Users</Link>
+                                            <Link to="/users/all" className="dropdown-item">All Users</Link>
                                         </div>
                                     </li>
                                 )}
@@ -54,10 +54,10 @@ export default class Navbar extends React.Component {
                         {!user.isAuthenticated && (
                             <ul className="navbar-nav">
                                 <li className="nav-item">
-                                    <Link to="/users/login" className="nav-link">Login</Link>
+                                    <Link to="/users/signin" className="nav-link">Login</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link to="/users/register" className="nav-link">Register</Link>
+                                    <Link to="/users/signup" className="nav-link">Register</Link>
                                 </li>
                             </ul>
                         )}

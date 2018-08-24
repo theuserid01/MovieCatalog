@@ -1,7 +1,7 @@
 import React from 'react'
 import { Formik, Field as FormikField, Form as FormikForm } from 'formik'
 import * as yup from 'yup'
-import FieldGroup from '../Common/FieldGroup'
+import FieldGroup from '../common/FieldGroup'
 
 const UserForm = ({ attr, history, initValues, onSubmit }) => {
     return (

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
-import Pagination from '../Common/Pagination'
+import Pagination from '../common/Pagination'
 import reqService from '../../services/requests'
 
 class UsersPage extends React.Component {
@@ -17,8 +17,11 @@ class UsersPage extends React.Component {
                 hasPrevPage: false,
                 nextPage: 0,
                 prevPage: 0,
-                searchQuery: '',
-                totalPages: 0
+                search: '',
+                queryPage: '',
+                querySearch: '',
+                totalPages: 0,
+                totalPagesRange: []
             }
         }
     }
@@ -109,9 +112,9 @@ class UsersPage extends React.Component {
                                     <td>{m.email}</td>
                                     <td className="text-center">
                                         <div className="btn-group btn-group-xs d-flex">
-                                            <Link to={'/admin/users/edit/details/' + m._id} className="btn btn-sm btn-info-b3 w-100" role="button">Edit Details</Link>
-                                            <Link to={'/admin/users/edit/roles/' + m._id} className="btn btn-sm btn-warning-b3 w-100" role="button">Edit Roles</Link>
-                                            <Link to={'/admin/users/delete/' + m._id} className="btn btn-sm btn-danger-b3 w-100" role="button">Delete User</Link>
+                                            <Link to={'/users/edit/details/' + m._id} className="btn btn-sm btn-info-b3 w-100" role="button">Edit Details</Link>
+                                            <Link to={'/users/edit/roles/' + m._id} className="btn btn-sm btn-warning-b3 w-100" role="button">Edit Roles</Link>
+                                            <Link to={'/users/delete/' + m._id} className="btn btn-sm btn-danger-b3 w-100" role="button">Delete User</Link>
                                         </div>
                                     </td>
                                 </tr>
@@ -120,9 +123,6 @@ class UsersPage extends React.Component {
                     </tbody>
                 </table>
                 <Pagination
-                    onClickNext={this.onClickNext}
-                    onClickPage={this.onClickPage}
-                    onClickPrev={this.onClickPrev}
                     pagination={this.state.usersPagination}
                 />
             </section >

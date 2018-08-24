@@ -54,8 +54,8 @@ class EDitRolesPage extends React.Component {
     }
 
     onClickSelectedToLeft = () => {
-        let e = document.getElementById('selectedRoles')
-        let selectedOption = e.options[e.selectedIndex]
+        const e = document.getElementById('selectedRoles')
+        const selectedOption = e.options[e.selectedIndex]
         if (selectedOption === undefined) {
             this.setState({ error: true })
             return
@@ -79,8 +79,8 @@ class EDitRolesPage extends React.Component {
     }
 
     onClickSelectedToRight = () => {
-        let e = document.getElementById('availableRoles')
-        let selectedOption = e.options[e.selectedIndex]
+        const e = document.getElementById('availableRoles')
+        const selectedOption = e.options[e.selectedIndex]
         if (selectedOption === undefined) {
             this.setState({ error: true })
             return
