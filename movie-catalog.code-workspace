@@ -1,16 +1,26 @@
 {
-	"folders": [
-    	{
-			"path": "client-angular"
-		},
-		{
-			"path": "client-react"
-		},
-		{
-			"path": "local-storage"
-		},
-		{
-			"path": "server-express"
-		}
-	]
+    "folders": [
+        {
+            "path": "client-angular"
+        },
+        {
+            "path": "client-react"
+        },
+        {
+            "path": "local-storage"
+        },
+        {
+            "path": "server-express"
+        }
+    ],
+    "settings": {
+        "cSpell.words": [
+            "describedby",
+            "formik",
+            "haspopup",
+            "signin",
+            "signup",
+            "toastr"
+        ]
+    }
 }
