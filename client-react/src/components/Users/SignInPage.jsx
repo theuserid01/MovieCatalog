@@ -5,7 +5,7 @@ import * as yup from 'yup'
 
 import FieldGroup from '../common/FieldGroup'
 import observer from '../../services/observer'
-import reqService from '../../services/requests'
+import usersService from '../../services/users-service'
 
 const LoginPage = (props) => {
     return (
@@ -38,7 +38,7 @@ const LoginPage = (props) => {
                     }
 
                     try {
-                        const res = await reqService.signIn(data)
+                        const res = await usersService.signIn(data)
 
                         if (!res.success) {
                             console.log(res.message)
@@ -48,7 +48,6 @@ const LoginPage = (props) => {
                         }
 
                         formikBag.resetForm()
-                        localStorage.setItem('user', JSON.stringify(res.data))
                         observer.onLogin()
                         props.history.push('/')
                     } catch (err) {

@@ -13,13 +13,13 @@ import { catchError } from 'rxjs/operators';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
     constructor(
-        private tostrService: ToastrService
+        private toastrService: ToastrService
     ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(req)
             .pipe(catchError((err: HttpErrorResponse) => {
-                this.tostrService.error(err.error.message, 'Error!');
+                this.toastrService.error(err.error.message, 'Error!');
                 return throwError(err);
             }));
     }

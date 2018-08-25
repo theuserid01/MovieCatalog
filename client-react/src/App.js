@@ -36,24 +36,11 @@ class App extends React.Component {
     }
 
     onLogin = () => {
-        let user = JSON.parse(localStorage.getItem('user'))
-
-        if (user.authToken === null) {
-            console.log('Failed authToken!')
-            return
+        // localStorage is set in axios response interceptor
+        const user = JSON.parse(localStorage.getItem('user'))
+        if (user != null) {
+            this.setState(user)
         }
-
-        localStorage.setItem('authToken', user.authToken)
-
-        if (user.roles && user.roles.includes('Administrator')) {
-            this.setState({ isAdmin: true })
-        }
-
-        this.setState({
-            _id: user._id,
-            isAuthenticated: true,
-            username: user.username
-        })
 
         this.props.history.push('/')
     }
@@ -91,7 +78,6 @@ class App extends React.Component {
                         <AdminRoute auth={this.state.isAdmin} path="/users/delete/:id" component={UsersDeletePage} />
                         <AuthRoute auth={this.state.isAuthenticated} path="/users/edit/details/:id" component={UsersEditDetailsPage} />
                         <AuthRoute auth={this.state.isAuthenticated} path="/users/edit/password/:id" component={UsersEditPasswordPage} />
-                        <AdminRoute auth={this.state.isAdmin} path="/users/edit/details/:id" component={UsersEditDetailsPage} />
                         <AdminRoute auth={this.state.isAdmin} path="/users/edit/roles/:id" component={UsersEditRolesPage} />
                         <Route component={NotFound} />
                     </Switch>

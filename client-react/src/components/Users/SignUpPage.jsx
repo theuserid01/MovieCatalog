@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 
 import UserForm from './_UserForm'
-import reqService from '../../services/requests'
+import usersService from '../../services/users-service'
 import observer from '../../services/observer'
 
 const attr = {
@@ -35,7 +35,7 @@ class RegisterPage extends React.Component {
         }
 
         try {
-            const res = await reqService.signUp(data)
+            const res = await usersService.signUp(data)
 
             if (!res.success) {
                 console.log(res.message)

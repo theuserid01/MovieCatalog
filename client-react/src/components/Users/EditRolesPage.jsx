@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 
-import reqService from '../../services/requests'
+import usersService from '../../services/users-service'
 
 class EDitRolesPage extends React.Component {
     constructor(props) {
@@ -23,7 +23,7 @@ class EDitRolesPage extends React.Component {
     async getData() {
         try {
             const id = this.props.match.params.id
-            let res = await reqService.userEditRolesGet(id)
+            let res = await usersService.editRolesGet(id)
 
             if (!res.success) {
                 console.log(res.message)
@@ -55,7 +55,7 @@ class EDitRolesPage extends React.Component {
 
     onClickSelectedToLeft = () => {
         const e = document.getElementById('selectedRoles')
-        const selectedOption = e.options[e.selectedIndex]
+        const selectedOption = e['options'][e['selectedIndex']]
         if (selectedOption === undefined) {
             this.setState({ error: true })
             return
@@ -80,7 +80,7 @@ class EDitRolesPage extends React.Component {
 
     onClickSelectedToRight = () => {
         const e = document.getElementById('availableRoles')
-        const selectedOption = e.options[e.selectedIndex]
+        const selectedOption = e['options'][e['selectedIndex']]
         if (selectedOption === undefined) {
             this.setState({ error: true })
             return
@@ -114,8 +114,8 @@ class EDitRolesPage extends React.Component {
         try {
             const id = this.props.match.params.id
             const data = { roles: this.state.selectedRoles }
-            const res = await reqService
-                .userEditRolesPost(id, data)
+            const res = await usersService
+                .editRolesPost(id, data)
 
             if (!res.success) {
                 console.log(res.message)

@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
+
 import Pagination from '../common/Pagination'
-import reqService from '../../services/requests'
+import usersService from '../../services/users-service'
 
 class UsersPage extends React.Component {
     constructor(props) {
@@ -40,7 +41,7 @@ class UsersPage extends React.Component {
 
     async getData(query = '?page=1') {
         try {
-            const res = await reqService.usersGet(query)
+            const res = await usersService.allGet(query)
 
             if (!res.success) {
                 console.log(res.message)

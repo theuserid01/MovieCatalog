@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 
 import MovieForm from './_MovieForm'
-import reqService from '../../services/requests'
+import moviesService from '../../services/movies-service'
 
 const attr = {
     btnColor: 'btn-outline-primary',
@@ -40,7 +40,7 @@ class CreatePage extends React.Component {
         }
 
         try {
-            const res = await reqService.movieCreatePost(data)
+            const res = await moviesService.createPost(data)
             if (!res.success) {
                 console.log(res.message)
                 formikBag.setErrors(res.errors)

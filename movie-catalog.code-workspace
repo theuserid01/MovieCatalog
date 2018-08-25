@@ -18,6 +18,7 @@
             "describedby",
             "formik",
             "haspopup",
+            "Injectable",
             "signin",
             "signup",
             "toastr"

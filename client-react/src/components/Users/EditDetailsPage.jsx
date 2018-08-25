@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 
 import UserForm from './_UserForm'
-import reqService from '../../services/requests'
+import usersService from '../../services/users-service'
 
 const attr = {
     btnColor: 'btn-outline-primary',
@@ -30,7 +30,7 @@ class EditDetailsPage extends React.Component {
     async getData() {
         try {
             const id = this.props.match.params.id
-            const res = await reqService.userEditDetailsGet(id)
+            const res = await usersService.editDetailsGet(id)
 
             if (!res.success) {
                 console.log(res.message)
@@ -51,7 +51,7 @@ class EditDetailsPage extends React.Component {
         }
 
         try {
-            const res = await reqService.userEditDetailsPost(id, data)
+            const res = await usersService.editDetailsPost(id, data)
 
             if (!res.success) {
                 console.log(res.message)

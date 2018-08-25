@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 
 import MovieForm from './_MovieForm'
-import reqService from '../../services/requests'
+import moviesService from '../../services/movies-service'
 
 const attr = {
     btnColor: 'btn-outline-danger',
@@ -33,10 +33,9 @@ class DeletePage extends React.Component {
     }
 
     async getData() {
-        const id = this.props.match.params.id
-
         try {
-            const res = await reqService.movieDeleteGet(id)
+            const id = this.props.match.params.id
+            const res = await moviesService.deleteGet(id)
 
             if (!res.success) {
                 console.log(res.message)
@@ -63,7 +62,7 @@ class DeletePage extends React.Component {
         }
 
         try {
-            const res = await reqService.movieDeletePost(id, data)
+            const res = await moviesService.deletePost(id, data)
 
             if (!res.success) {
                 console.log(res.message)

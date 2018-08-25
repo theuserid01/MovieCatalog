@@ -18,7 +18,7 @@ export class SuccessInterceptor implements HttpInterceptor {
     constructor(
         private authService: AuthService,
         private router: Router,
-        private tostrService: ToastrService
+        private toastrService: ToastrService
     ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -45,7 +45,7 @@ export class SuccessInterceptor implements HttpInterceptor {
                     return;
                 }
 
-                this.tostrService.success(res.body.message, 'Success!');
+                this.toastrService.success(res.body.message, 'Success!');
 
                 if (this.authService.isAdmin() && res.url.includes('users')) {
                     this.router.navigate(['/users/all']);

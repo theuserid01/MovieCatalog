@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 
 import MovieForm from './_MovieForm'
-import reqService from '../../services/requests'
+import moviesService from '../../services/movies-service'
 
 const attr = {
     btnColor: 'btn-outline-primary',
@@ -16,6 +16,7 @@ class EditPage extends React.Component {
         super(props)
 
         this.state = {
+            loading: false,
             movie: {
                 countries: '',
                 genres: '',
@@ -33,10 +34,10 @@ class EditPage extends React.Component {
     }
 
     async getData() {
-        const id = this.props.match.params.id
-
         try {
-            const res = await reqService.movieEditGet(id)
+            this.setState({ loading: true })
+            const id = this.props.match.params.id
+            const res = await moviesService.editGet(id)
 
             if (!res.success) {
                 console.log(res.message)
@@ -45,6 +46,7 @@ class EditPage extends React.Component {
             }
 
             this.setState({ movie: res.data })
+            this.setState({ loading: false })
         } catch (err) {
             console.log(err)
         }
@@ -63,7 +65,7 @@ class EditPage extends React.Component {
         }
 
         try {
-            const res = await reqService.movieEditPost(id, data)
+            const res = await moviesService.editPost(id, data)
 
             if (!res.success) {
                 console.log(res.message)

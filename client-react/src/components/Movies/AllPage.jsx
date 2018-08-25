@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 
-import reqService from '../../services/requests'
+import moviesService from '../../services/movies-service'
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class HomePage extends React.Component {
 
     async getData() {
         try {
-            const res = await reqService.moviesGet()
+            const res = await moviesService.allGet()
 
             if (!res.success) {
                 console.log(res.message)
@@ -39,7 +39,7 @@ class HomePage extends React.Component {
 
     async getMovieDetails(id) {
         try {
-            const res = await reqService.movieDetailsIndexGet(id)
+            const res = await moviesService.detailsGet(id)
 
             if (!res.success) {
                 console.log(res.message)

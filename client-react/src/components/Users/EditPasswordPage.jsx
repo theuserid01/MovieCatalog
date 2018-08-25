@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import * as yup from 'yup'
 
 import FieldGroup from '../common/FieldGroup'
-import reqService from '../../services/requests'
+import usersService from '../../services/users-service'
 
 const EditPasswordPage = (props) => {
     return (
@@ -33,8 +33,8 @@ const EditPasswordPage = (props) => {
                         setErrors,
                         setSubmitting
                     }
-                    const id = props.match.params.id
 
+                    const id = props.match.params.id
                     const data = {
                         passwordCurrent: values.passwordCurrent,
                         passwordNew: values.passwordNew,
@@ -42,8 +42,8 @@ const EditPasswordPage = (props) => {
                     }
 
                     try {
-                        const res = await reqService
-                            .userEditPasswordPost(id, data)
+                        const res = await usersService
+                            .editPasswordPost(id, data)
 
                         if (!res.success) {
                             console.log(res.message)
