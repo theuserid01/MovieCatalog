@@ -29,7 +29,7 @@ module.exports = {
             hasPrevPage: currentPage > 1,
             nextPage: page + 1,
             prevPage: page - 1,
-            search: search,
+            search: search || '',
             queryPage: `&page=${currentPage}`,
             querySearch: search ? `&search=${search}` : '',
             totalPages: totalPages,
