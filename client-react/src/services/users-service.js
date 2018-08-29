@@ -72,6 +72,10 @@ const usersService = {
         const axiosResponse = await api.post('/users/edit/details/' + id, data)
         return axiosResponse.data
     },
+    editPasswordPost: async (id, data) => {
+        const axiosResponse = await api.post('/users/edit/password/' + id, data)
+        return axiosResponse.data
+    },
     editRolesGet: async (id) => {
         const axiosResponse = await api.get('/users/edit/roles/' + id)
         return axiosResponse.data
@@ -97,10 +101,6 @@ const usersService = {
     },
     editRolesPost: async (id, data) => {
         const axiosResponse = await api.post('/users/edit/roles/' + id, data)
-        return axiosResponse.data
-    },
-    editPasswordPost: async (id, data) => {
-        const axiosResponse = await api.post('/users/edit/password/' + id, data)
         return axiosResponse.data
     },
     signIn: async (data) => {

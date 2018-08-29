@@ -15,10 +15,11 @@
     ],
     "settings": {
         "cSpell.words": [
+            "Injectable",
             "describedby",
             "formik",
             "haspopup",
-            "Injectable",
+            "keyframes",
             "signin",
             "signup",
             "toastr"

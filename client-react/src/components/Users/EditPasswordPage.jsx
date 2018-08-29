@@ -52,7 +52,6 @@ const EditPasswordPage = (props) => {
                             return
                         }
 
-                        formikBag.resetForm()
                         props.history.goBack()
                     } catch (err) {
                         console.log(err)

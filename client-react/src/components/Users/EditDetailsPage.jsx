@@ -2,6 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 
 import UserForm from './_UserForm'
+import withLoading from '../../helpers/withLoading'
 import usersService from '../../services/users-service'
 
 const attr = {
@@ -14,34 +15,6 @@ const attr = {
 }
 
 class EditDetailsPage extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            email: '',
-            username: ''
-        }
-    }
-
-    componentDidMount() {
-        this.getData()
-    }
-
-    async getData() {
-        try {
-            const id = this.props.match.params.id
-            const res = await usersService.editDetailsGet(id)
-
-            if (!res.success) {
-                console.log(res.message)
-                return
-            }
-
-            this.setState(res.data)
-        } catch (err) {
-            console.log(err)
-        }
-    }
 
     onSubmitHandler = async (values, formikBag) => {
         const id = this.props.match.params.id
@@ -60,7 +33,6 @@ class EditDetailsPage extends React.Component {
                 return
             }
 
-            formikBag.resetForm()
             this.props.history.goBack()
         } catch (err) {
             console.log(err)
@@ -72,11 +44,14 @@ class EditDetailsPage extends React.Component {
             <UserForm
                 attr={attr}
                 history={this.props.history}
-                initValues={this.state}
+                initValues={this.props.data}
                 onSubmit={this.onSubmitHandler}
             />
         )
     }
 }
 
-export default withRouter(EditDetailsPage)
+const request = (id) => usersService.editDetailsGet(id)
+export default withRouter(
+    withLoading(EditDetailsPage, request, { id: true })
+)

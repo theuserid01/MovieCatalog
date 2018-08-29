@@ -1,6 +1,7 @@
 import React from 'react'
 import { Formik, Field as FormikField, Form as FormikForm } from 'formik'
 import * as yup from 'yup'
+
 import FieldGroup from '../common/FieldGroup'
 
 const MovieForm = ({ attr, history, initValues, onSubmit }) => {

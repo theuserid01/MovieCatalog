@@ -1,13 +1,19 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-export default class Navbar extends React.Component {
+import usersActions from '../../redux/actions/users-actions'
+
+class Navbar extends React.Component {
+    onSignOut = () => {
+        this.props.signOut()
+    }
+
     render() {
-        const { user, onLogout } = this.props
         return (
             <nav className="navbar navbar-expand-md navbar-dark">
                 <div className="container">
-                    <Link className="navbar-brand" to="/">App</Link>
+                    <Link className="navbar-brand" to="/">Movie Catalog</Link>
                     <button
                         type="button"
                         className="navbar-toggler navbar-toggler-right"
@@ -29,9 +35,9 @@ export default class Navbar extends React.Component {
                                 </div>
                             </li>
                         </ul>
-                        {user.isAuthenticated && (
+                        {this.props.user.isAuthenticated && (
                             <ul className="navbar-nav" id="navbarSupportedContent">
-                                {user.isAdmin && (
+                                {this.props.user.isAdmin && (
                                     <li className="nav-item dropdown">
                                         <Link to="/" className="nav-link dropdown-toggle" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button">Admin</Link>
                                         <div className="dropdown-menu">
@@ -42,16 +48,16 @@ export default class Navbar extends React.Component {
                                 <li className="nav-item dropdown">
                                     <Link to="/" className="nav-link dropdown-toggle" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button">My Profile</Link>
                                     <div className="dropdown-menu">
-                                        <Link to={'/users/edit/details/' + user._id} className="dropdown-item">Edit Details</Link>
-                                        <Link to={'/users/edit/password/' + user._id} className="dropdown-item">Edit Password</Link>
+                                        <Link to={'/users/edit/details/' + this.props.user._id} className="dropdown-item">Edit Details</Link>
+                                        <Link to={'/users/edit/password/' + this.props.user._id} className="dropdown-item">Edit Password</Link>
                                     </div>
                                 </li>
                                 <li className="nav-item">
-                                    <Link to="/" className="nav-link" onClick={onLogout}>Logout</Link>
+                                    <Link to="/" className="nav-link" onClick={this.onSignOut}>Logout</Link>
                                 </li>
                             </ul>
                         )}
-                        {!user.isAuthenticated && (
+                        {!this.props.user.isAuthenticated && (
                             <ul className="navbar-nav">
                                 <li className="nav-item">
                                     <Link to="/users/signin" className="nav-link">Login</Link>
@@ -67,3 +73,19 @@ export default class Navbar extends React.Component {
         )
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signOut: () => {
+            dispatch(usersActions.creators.signOut({}))
+        }
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.users.signIn
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

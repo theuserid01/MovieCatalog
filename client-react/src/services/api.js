@@ -1,6 +1,9 @@
 import axios from 'axios'
 import toastr from 'toastr'
 
+import store from '../redux/store'
+import usersActions from '../redux/actions/users-actions'
+
 axios.defaults.baseURL = 'http://localhost:5000'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
@@ -29,9 +32,14 @@ axios.interceptors.response.use(
             return res
         }
 
+        // Set user data in localStorage and redux store
         if (body.data && (body.token || body.data.authToken)) {
-            setItemsToLocalStorage(body.data)
-            return res
+            store.dispatch(
+                usersActions.creators.signIn(body.data)
+            )
+            if (res.request.responseURL.includes('signin')) {
+                return res
+            }
         }
 
         toastr.success(res.data.message, 'Success!')
@@ -45,15 +53,3 @@ axios.interceptors.response.use(
 )
 
 export default axios
-
-function setItemsToLocalStorage(data) {
-    localStorage.setItem(
-        'user', JSON.stringify({
-            '_id': data._id,
-            'isAdmin': data.roles && data.roles.includes('Administrator'),
-            'isAuthenticated': true,
-            'authToken': data.authToken,
-            'username': data.username
-        })
-    )
-}

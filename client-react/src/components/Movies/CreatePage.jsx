@@ -48,7 +48,6 @@ class CreatePage extends React.Component {
                 return
             }
 
-            formikBag.resetForm()
             this.props.history.push('/')
         } catch (err) {
             console.log(err)

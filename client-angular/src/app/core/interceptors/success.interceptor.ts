@@ -41,8 +41,10 @@ export class SuccessInterceptor implements HttpInterceptor {
 
                 if (res.body.data && (res.body.token || res.body.data.authToken)) {
                     this.setItemsToLocalStorage(res.body.data);
-                    this.router.navigate(['/']);
-                    return;
+                    if (res.url.includes('signin')) {
+                        this.router.navigate(['/']);
+                        return;
+                    }
                 }
 
                 this.toastrService.success(res.body.message, 'Success!');

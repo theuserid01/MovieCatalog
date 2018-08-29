@@ -1,10 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { Link, withRouter } from 'react-router-dom'
 
+import withLoading from '../../helpers/withLoading'
 import moviesService from '../../services/movies-service'
 
-class HomePage extends React.Component {
+class AllPage extends React.Component {
     constructor(props) {
         super(props)
 
@@ -16,25 +17,7 @@ class HomePage extends React.Component {
     }
 
     componentDidMount() {
-        this.getData()
-    }
-
-    async getData() {
-        try {
-            const res = await moviesService.allGet()
-
-            if (!res.success) {
-                console.log(res.message)
-                return
-            }
-
-            this.setState({
-                movies: res.data.movies,
-                movieDetails: res.data.movieDetails
-            })
-        } catch (e) {
-            console.log(e)
-        }
+        this.setState({ movieDetails: this.props.data.movieDetails })
     }
 
     async getMovieDetails(id) {
@@ -74,7 +57,7 @@ class HomePage extends React.Component {
                         />
                     </div>
                     <div className="div-thumbs">
-                        {this.state.movies
+                        {this.props.data.movies
                             .filter(m =>
                                 m.genres.toLowerCase().includes(this.state.filter.toLowerCase()) ||
                                 m.title.toLowerCase().includes(this.state.filter.toLowerCase()))
@@ -151,17 +134,26 @@ class HomePage extends React.Component {
                         <h5>Synopsis</h5>
                         <p>{md.synopsis ? md.synopsis : 'None'}</p>
                     </article>
-                    <div className="btn-group d-flex">
-
-                        <Link to={'/movies/edit/' + md._id} className="btn btn-warning w-100" role="button">Edit</Link>
-
-                        <Link to={'/movies/delete/' + md._id} className="btn btn-danger w-100" role="button">Delete</Link>
-
-                    </div>
+                    {this.props.isAuthenticated && (
+                        <div className="btn-group d-flex">
+                            <Link to={'/movies/edit/' + md._id} className="btn btn-warning w-100" role="button">Edit</Link>
+                            {this.props.isAdmin && (
+                                <Link to={'/movies/delete/' + md._id} className="btn btn-danger w-100" role="button">Delete</Link>
+                            )}
+                        </div>
+                    )}
                 </section>
             </div>
         )
     }
 }
 
-export default withRouter(HomePage)
+const mapStateToProps = (state) => {
+    return {
+        isAdmin: state.users.signIn.isAdmin,
+        isAuthenticated: state.users.signIn.isAuthenticated
+    }
+}
+
+const request = () => moviesService.allGet()
+export default connect(mapStateToProps, null)(withRouter(withLoading(AllPage, request, { id: false })))

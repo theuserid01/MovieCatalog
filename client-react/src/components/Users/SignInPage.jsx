@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom'
 import * as yup from 'yup'
 
 import FieldGroup from '../common/FieldGroup'
-import observer from '../../services/observer'
 import usersService from '../../services/users-service'
 
 const LoginPage = (props) => {
@@ -47,8 +46,6 @@ const LoginPage = (props) => {
                             return
                         }
 
-                        formikBag.resetForm()
-                        observer.onLogin()
                         props.history.push('/')
                     } catch (err) {
                         console.log(err)

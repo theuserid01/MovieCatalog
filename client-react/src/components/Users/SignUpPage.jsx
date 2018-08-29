@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom'
 
 import UserForm from './_UserForm'
 import usersService from '../../services/users-service'
-import observer from '../../services/observer'
 
 const attr = {
     btnColor: 'btn-outline-primary',
@@ -14,14 +13,14 @@ const attr = {
     title: 'Register'
 }
 
-class RegisterPage extends React.Component {
+class SignUp extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
             email: 'admin@gmail.com',
             password: 'Admin1',
-            repeatPassword: 'Admin1',
+            passwordRepeat: 'Admin1',
             username: 'admin'
         }
     }
@@ -30,7 +29,7 @@ class RegisterPage extends React.Component {
         const data = {
             email: values.email,
             password: values.password,
-            repeatPassword: values.repeatPassword,
+            passwordRepeat: values.passwordRepeat,
             username: values.username
         }
 
@@ -44,9 +43,7 @@ class RegisterPage extends React.Component {
                 return
             }
 
-            formikBag.resetForm()
-            localStorage.setItem('user', JSON.stringify(res.data))
-            observer.onLogin()
+            this.props.history.push('/')
         } catch (err) {
             console.log(err)
         }
@@ -64,4 +61,4 @@ class RegisterPage extends React.Component {
     }
 }
 
-export default withRouter(RegisterPage)
+export default withRouter(SignUp)

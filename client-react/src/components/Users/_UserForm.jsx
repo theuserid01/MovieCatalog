@@ -88,11 +88,11 @@ const UserForm = ({ attr, history, initValues, onSubmit }) => {
                                     componentType='input'
                                     disabled={attr.isFieldDisabled}
                                     label='Repeat Password'
-                                    name='repeatPassword'
+                                    name='passwordRepeat'
                                     placeholder='Repeat password'
                                     required={true}
                                     type='password'
-                                    value={values.repeatPassword}
+                                    value={values.passwordRepeat}
                                 />
                             )}
                             <div className="btn-group d-flex" role="group">

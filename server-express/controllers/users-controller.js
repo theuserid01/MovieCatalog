@@ -341,7 +341,7 @@ module.exports = {
                     return res.status(200).json({
                         errors: errors,
                         data: {},
-                        message: 'Genrating token failed!',
+                        message: 'Generating token failed!',
                         success: false
                     })
                 }
@@ -350,6 +350,8 @@ module.exports = {
                     _id: user._id,
                     authToken: authToken,
                     email: user.email,
+                    isAdmin: user.roles.includes(constants.ADMINISTRATOR_ROLE),
+                    isAuthenticated: true,
                     roles: user.roles,
                     username: user.username
                 }
@@ -424,6 +426,8 @@ module.exports = {
                     _id: user._id,
                     authToken: authToken,
                     email: user.email,
+                    isAdmin: user.roles.includes(constants.ADMINISTRATOR_ROLE),
+                    isAuthenticated: true,
                     roles: user.roles,
                     username: user.username
                 }
@@ -432,6 +436,7 @@ module.exports = {
                     errors: errors,
                     data: data,
                     message: 'Registration successful!',
+                    token: authToken,
                     success: true
                 })
             })

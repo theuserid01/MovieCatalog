@@ -2,6 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 
 import UserForm from './_UserForm'
+import withLoading from '../../helpers/withLoading'
 import usersService from '../../services/users-service'
 
 const attr = {
@@ -14,34 +15,6 @@ const attr = {
 }
 
 class DeletePage extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            email: '',
-            username: ''
-        }
-    }
-
-    componentDidMount() {
-        this.getData()
-    }
-
-    async getData() {
-        try {
-            const id = this.props.match.params.id
-            const res = await usersService.editDetailsGet(id)
-
-            if (!res.success) {
-                console.log(res.message)
-                return
-            }
-
-            this.setState(res.data)
-        } catch (err) {
-            console.log(err)
-        }
-    }
 
     onSubmitHandler = async (values, formikBag) => {
         const id = this.props.match.params.id
@@ -60,7 +33,6 @@ class DeletePage extends React.Component {
                 return
             }
 
-            formikBag.resetForm()
             this.props.history.goBack()
         } catch (err) {
             console.log(err)
@@ -72,11 +44,14 @@ class DeletePage extends React.Component {
             <UserForm
                 attr={attr}
                 history={this.props.history}
-                initValues={this.state}
+                initValues={this.props.data}
                 onSubmit={this.onSubmitHandler}
             />
         )
     }
 }
 
-export default withRouter(DeletePage)
+const request = (id) => usersService.deleteGet(id)
+export default withRouter(
+    withLoading(DeletePage, request, { id: true })
+)

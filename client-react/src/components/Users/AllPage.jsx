@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom'
 import Pagination from '../common/Pagination'
 import usersService from '../../services/users-service'
 
-class UsersPage extends React.Component {
+class AllPage extends React.Component {
     constructor(props) {
         super(props)
 
@@ -131,4 +131,4 @@ class UsersPage extends React.Component {
     }
 }
 
-export default withRouter(UsersPage)
+export default withRouter(AllPage)

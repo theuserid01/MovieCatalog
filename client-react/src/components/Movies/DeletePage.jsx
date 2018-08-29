@@ -2,6 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 
 import MovieForm from './_MovieForm'
+import withLoading from '../../helpers/withLoading'
 import moviesService from '../../services/movies-service'
 
 const attr = {
@@ -12,42 +13,6 @@ const attr = {
 }
 
 class DeletePage extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            movie: {
-                countries: '',
-                genres: '',
-                imageUrl: '',
-                languages: '',
-                productionYear: 0,
-                synopsis: '',
-                title: ''
-            }
-        }
-    }
-
-    componentDidMount() {
-        this.getData()
-    }
-
-    async getData() {
-        try {
-            const id = this.props.match.params.id
-            const res = await moviesService.deleteGet(id)
-
-            if (!res.success) {
-                console.log(res.message)
-                this.props.history.push('/users/login')
-                return
-            }
-
-            this.setState({ movie: res.data })
-        } catch (err) {
-            console.log(err)
-        }
-    }
 
     onSubmitHandler = async (values, formikBag) => {
         const id = this.props.match.params.id
@@ -71,7 +36,6 @@ class DeletePage extends React.Component {
                 return
             }
 
-            formikBag.resetForm()
             this.props.history.push('/movies/all')
         } catch (err) {
             console.log(err)
@@ -83,11 +47,14 @@ class DeletePage extends React.Component {
             <MovieForm
                 attr={attr}
                 history={this.props.history}
-                initValues={this.state.movie}
+                initValues={this.props.data}
                 onSubmit={this.onSubmitHandler}
             />
         )
     }
 }
 
-export default withRouter(DeletePage)
+const request = (id) => moviesService.deleteGet(id)
+export default withRouter(
+    withLoading(DeletePage, request, { id: true })
+)
