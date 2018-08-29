@@ -4,7 +4,7 @@ import * as yup from 'yup'
 
 import FieldGroup from '../common/FieldGroup'
 
-const MovieForm = ({ attr, history, initValues, onSubmit }) => {
+const MovieForm = ({ attr, history, initValues, params, onSubmitHandler }) => {
     return (
         <Formik
             enableReinitialize={true}
@@ -24,13 +24,37 @@ const MovieForm = ({ attr, history, initValues, onSubmit }) => {
                 })
             }
             onSubmit={
-                (values, { resetForm, setErrors, setSubmitting }) => {
-                    const formikBag = {
-                        resetForm,
-                        setErrors,
-                        setSubmitting
+                async (values, { setErrors, setSubmitting }) => {
+                    const id = params.id
+                    const data = {
+                        countries: values.countries,
+                        genres: values.genres,
+                        imageUrl: values.imageUrl,
+                        languages: values.languages,
+                        productionYear: Number(values.productionYear),
+                        synopsis: values.synopsis,
+                        title: values.title
                     }
-                    onSubmit(values, formikBag)
+
+                    try {
+                        let res = null
+                        if (!id) {
+                            res = await onSubmitHandler(data)
+                        } else {
+                            res = await onSubmitHandler(id, data)
+                        }
+            
+                        if (!res.success) {
+                            console.log(res.message)
+                            setErrors(res.errors)
+                            setSubmitting(false)
+                            return
+                        }
+            
+                        history.push('/movies/all')
+                    } catch (err) {
+                        console.log(err)
+                    }
                 }
             }
             render={({ isSubmitting, values }) =>

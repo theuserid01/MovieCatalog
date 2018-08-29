@@ -11,50 +11,21 @@ const attr = {
     isFieldDisabled: false,
     title: 'Edit Movie'
 }
+const getData = (id) => moviesService.editGet(id)
+const onSubmitHandler = (id, data) => moviesService.editPost(id, data)
 
-class EditPage extends React.Component {
-
-    onSubmitHandler = async (values, formikBag) => {
-        const id = this.props.match.params.id
-        const data = {
-            countries: values.countries,
-            genres: values.genres,
-            imageUrl: values.imageUrl,
-            languages: values.languages,
-            productionYear: Number(values.productionYear),
-            synopsis: values.synopsis,
-            title: values.title
-        }
-
-        try {
-            const res = await moviesService.editPost(id, data)
-
-            if (!res.success) {
-                console.log(res.message)
-                formikBag.setErrors(res.errors)
-                formikBag.setSubmitting(false)
-                return
-            }
-
-            this.props.history.push('/movies/all')
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    render() {
-        return (
-            <MovieForm
-                attr={attr}
-                history={this.props.history}
-                initValues={this.props.data}
-                onSubmit={this.onSubmitHandler}
-            />
-        )
-    }
+const EditPage = (props) => {
+    return (
+        <MovieForm
+            attr={attr}
+            history={props.history}
+            initValues={props.data}
+            params={props.match.params}
+            onSubmitHandler={onSubmitHandler}
+        />
+    )
 }
 
-const request = (id) => moviesService.editGet(id)
 export default withRouter(
-    withLoading(EditPage, request, { id: true })
+    withLoading(EditPage, getData, { id: true })
 )

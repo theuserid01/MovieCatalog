@@ -10,60 +10,27 @@ const attr = {
     isFieldDisabled: false,
     title: 'Create Movie'
 }
+const onSubmitHandler = (data) => moviesService.createPost(data)
 
-class CreatePage extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            movie: {
-                countries: '',
-                genres: '',
-                imageUrl: '',
-                languages: '',
-                productionYear: 0,
-                synopsis: '',
-                title: ''
-            }
-        }
+const CreatePage = (props) => {
+    const data = {
+        countries: '',
+        genres: '',
+        imageUrl: '',
+        languages: '',
+        productionYear: 0,
+        synopsis: '',
+        title: ''
     }
-
-    onSubmitHandler = async (values, formikBag) => {
-        const data = {
-            countries: values.countries,
-            genres: values.genres,
-            imageUrl: values.imageUrl,
-            languages: values.languages,
-            productionYear: Number(values.productionYear),
-            synopsis: values.synopsis,
-            title: values.title
-        }
-
-        try {
-            const res = await moviesService.createPost(data)
-            if (!res.success) {
-                console.log(res.message)
-                formikBag.setErrors(res.errors)
-                formikBag.setSubmitting(false)
-                return
-            }
-
-            this.props.history.push('/')
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    render() {
-        return (
-            <MovieForm
-                attr={attr}
-                history={this.props.history}
-                initValues={this.state.movie}
-                onSubmit={this.onSubmitHandler}
-            />
-        )
-    }
+    return (
+        <MovieForm
+            attr={attr}
+            history={props.history}
+            initValues={data}
+            params={props.match.params}
+            onSubmitHandler={onSubmitHandler}
+        />
+    )
 }
 
 export default withRouter(CreatePage)
