@@ -10,14 +10,21 @@ class AllPage extends React.Component {
         super(props)
 
         this.state = {
-            filter: '',
+              filter: '',
             movies: [],
-            movieDetails: {}
+            movieDetails: {},
+            movieDetailsId: ''
         }
     }
 
     componentDidMount() {
-        this.setState({ movieDetails: this.props.data.movieDetails })
+        const movieDetails = this.props.data.movieDetails
+        const movieDetailsId = this.props.data.movieDetails._id
+        this.setState({
+            movieDetails: movieDetails,
+            movieDetailsId: movieDetailsId
+        })
+        this.props.history.push('/movies/all/' + movieDetailsId)
     }
 
     async getMovieDetails(id) {
@@ -29,7 +36,11 @@ class AllPage extends React.Component {
                 return
             }
 
-            this.setState({ movieDetails: res.data.movieDetails })
+            this.setState({
+                movieDetails: res.data.movieDetails,
+                movieDetailsId: res.data.movieDetails._id
+            })
+            this.props.history.push('/movies/all/' + id)
         } catch (err) {
             console.log(err)
         }
@@ -40,6 +51,10 @@ class AllPage extends React.Component {
     }
 
     onClickArticle = (id) => {
+        if (this.state.movieDetailsId === id) {
+            return
+        }
+
         this.getMovieDetails(id)
     }
 
