@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 
-import Pagination from '../common/Pagination'
+import Pagination from '../shared/Pagination'
 import usersService from '../../services/users-service'
 
 class AllPage extends React.Component {

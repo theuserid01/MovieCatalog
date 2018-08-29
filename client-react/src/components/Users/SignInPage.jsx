@@ -3,7 +3,7 @@ import { Formik, Field as FormikField, Form as FormikForm } from 'formik'
 import { withRouter } from 'react-router-dom'
 import * as yup from 'yup'
 
-import FieldGroup from '../common/FieldGroup'
+import FieldGroup from '../shared/FieldGroup'
 import usersService from '../../services/users-service'
 
 const LoginPage = (props) => {

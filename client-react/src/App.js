@@ -18,8 +18,8 @@ import UsersSignUpPage from './components/users/SignUpPage'
 
 import AdminRoute from './helpers/AdminRoute'
 import AuthRoute from './helpers/AuthRoute'
-import Navbar from './components/common/Navbar'
-import NotFound from './components/common/NotFound'
+import Navbar from './components/shared/Navbar'
+import NotFound from './components/shared/NotFound'
 
 class App extends React.Component {
     render() {
