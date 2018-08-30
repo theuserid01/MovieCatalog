@@ -4,6 +4,11 @@ import './Spinner.css'
 
 const Spinner = () => {
     const header = document.getElementsByTagName('header')[0]
+
+    if (!header) {
+        return <h1 className="text-center">Loading...</h1>
+    }
+
     const headerHeight = getAbsoluteHeight(header)
     const spinnerHeight = document.body.offsetHeight - headerHeight
     return (

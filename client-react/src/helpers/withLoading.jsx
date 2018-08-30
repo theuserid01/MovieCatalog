@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Spinner from '../components/shared/Spinner'
+
 const withLoading = (WrappedComponent, request, param) =>
     class extends React.Component {
         constructor(props) {
@@ -41,11 +43,11 @@ const withLoading = (WrappedComponent, request, param) =>
 
 
         render() {
-            if (this.state.ready) {
-                return <WrappedComponent data={this.state.data} {...this.props} />
+            if (!this.state.ready) {
+                return <Spinner />
             }
 
-            return <h1 className="text-center">Loading...</h1>
+            return <WrappedComponent data={this.state.data} {...this.props} />
         }
     }
 
