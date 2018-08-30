@@ -12,7 +12,7 @@ const Spinner = () => {
     const headerHeight = getAbsoluteHeight(header)
     const spinnerHeight = document.body.offsetHeight - headerHeight
     return (
-        <section className="section-spinner" style={{ "height": spinnerHeight }}>
+        <section className="section-spinner" style={{ 'height': spinnerHeight }}>
             <div className="dbl-spinner"></div>
             <div className="dbl-spinner"></div>
         </section>

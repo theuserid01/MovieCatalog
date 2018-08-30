@@ -41,7 +41,6 @@ const withLoading = (WrappedComponent, request, param) =>
             }
         }
 
-
         render() {
             if (!this.state.ready) {
                 return <Spinner />

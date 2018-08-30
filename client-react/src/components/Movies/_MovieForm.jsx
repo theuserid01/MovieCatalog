@@ -43,14 +43,14 @@ const MovieForm = ({ attr, history, initValues, params, onSubmitHandler }) => {
                         } else {
                             res = await onSubmitHandler(id, data)
                         }
-            
+
                         if (!res.success) {
                             console.log(res.message)
                             setErrors(res.errors)
                             setSubmitting(false)
                             return
                         }
-            
+
                         history.push('/movies/all')
                     } catch (err) {
                         console.log(err)

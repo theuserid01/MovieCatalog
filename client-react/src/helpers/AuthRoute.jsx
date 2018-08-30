@@ -7,7 +7,11 @@ const AuthRoute = ({ auth, component: Component, ...rest }) =>
         render={props =>
             auth ?
                 <Component {...props} /> :
-                <Redirect to={{ pathname: '/users/signin', state: { from: props.location } }} />}
+                <Redirect to={{
+                    pathname: '/users/signin',
+                    state: { from: props.location }
+                }}
+                />}
     />
 
 export default AuthRoute

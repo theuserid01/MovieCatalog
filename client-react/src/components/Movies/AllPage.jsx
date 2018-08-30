@@ -10,7 +10,7 @@ class AllPage extends React.Component {
         super(props)
 
         this.state = {
-              filter: '',
+            filter: '',
             movies: [],
             movieDetails: {},
             movieDetailsId: ''
