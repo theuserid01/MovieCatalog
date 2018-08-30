@@ -6,8 +6,8 @@ Single-page application for cataloging Blu-ray & DVD movie collection and storin
     Cool design with animations supercharged by Bootstrap.<br />
     Main features: guards, interceptors, notifications, reactive forms, redux store, spinner, validations.<br />
 - Client-side [React](https://reactjs.org/)<br />
-    Cool design with animations supercharged by Bootstrap.<br />
-    Notifications handled by Toastr.<br />
+    Cool design supercharged by Bootstrap.<br />
+    Main features: guards, higher-order components, interceptors, notifications, redux store, spinner, validations.<br />
 - Server-side [Express](https://expressjs.com/)<br />
     The back-end is developed with Express.js, a web app framework for Node.js.<br />
     The server uses a non-relational database MongoDB with an Object Data Modeling library Mongoose.<br />
