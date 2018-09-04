@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 
 import UserForm from './_UserForm'
-import withLoading from '../../helpers/withLoading'
+import withLoader from '../../helpers/withLoader'
 import usersService from '../../services/users-service'
 
 const attr = {
@@ -38,5 +38,5 @@ const EditDetailsPage = (props) => {
 }
 
 export default withRouter(
-    withLoading(EditDetailsPage, getData, { id: true })
+    withLoader(EditDetailsPage, getData, { id: true })
 )

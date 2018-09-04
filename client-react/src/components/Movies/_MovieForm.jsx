@@ -4,11 +4,11 @@ import * as yup from 'yup'
 
 import FieldGroup from '../shared/FieldGroup'
 
-const MovieForm = ({ attr, history, initValues, params, onSubmitHandler }) => {
+const MovieForm = (props) => {
     return (
         <Formik
             enableReinitialize={true}
-            initialValues={initValues}
+            initialValues={props.initValues}
             validationSchema={
                 yup.object().shape({
                     imageUrl: yup.string()
@@ -25,7 +25,6 @@ const MovieForm = ({ attr, history, initValues, params, onSubmitHandler }) => {
             }
             onSubmit={
                 async (values, { setErrors, setSubmitting }) => {
-                    const id = params.id
                     const data = {
                         countries: values.countries,
                         genres: values.genres,
@@ -37,11 +36,12 @@ const MovieForm = ({ attr, history, initValues, params, onSubmitHandler }) => {
                     }
 
                     try {
+                        const id = props.match.params.id
                         let res = null
                         if (!id) {
-                            res = await onSubmitHandler(data)
+                            res = await props.onSubmitHandler(data)
                         } else {
-                            res = await onSubmitHandler(id, data)
+                            res = await props.onSubmitHandler(id, data)
                         }
 
                         if (!res.success) {
@@ -51,22 +51,22 @@ const MovieForm = ({ attr, history, initValues, params, onSubmitHandler }) => {
                             return
                         }
 
-                        history.push('/movies/all')
+                        props.history.push('/movies/all')
                     } catch (err) {
                         console.log(err)
                     }
                 }
             }
-            render={({ isSubmitting, values }) =>
+            render={({ isSubmitting, values }) => (
                 <section className="d-flex flex-row justify-content-center">
                     <article className="col-4">
-                        <h1 className="text-center">{attr.title}</h1>
+                        <h1 className="text-center">{props.attr.title}</h1>
                         <FormikForm>
                             <FormikField
                                 colWidth='col-12'
                                 component={FieldGroup}
                                 componentType='input'
-                                disabled={attr.isFieldDisabled}
+                                disabled={props.attr.isFieldDisabled}
                                 label='Title'
                                 name='title'
                                 placeholder='Enter title'
@@ -78,7 +78,7 @@ const MovieForm = ({ attr, history, initValues, params, onSubmitHandler }) => {
                                 colWidth='col-12'
                                 component={FieldGroup}
                                 componentType='input'
-                                disabled={attr.isFieldDisabled}
+                                disabled={props.attr.isFieldDisabled}
                                 label='Production Year'
                                 name='productionYear'
                                 placeholder='Enter production year'
@@ -90,7 +90,7 @@ const MovieForm = ({ attr, history, initValues, params, onSubmitHandler }) => {
                                 colWidth='col-12'
                                 component={FieldGroup}
                                 componentType='input'
-                                disabled={attr.isFieldDisabled}
+                                disabled={props.attr.isFieldDisabled}
                                 label='Countries'
                                 name='countries'
                                 placeholder='Enter countries'
@@ -102,7 +102,7 @@ const MovieForm = ({ attr, history, initValues, params, onSubmitHandler }) => {
                                 colWidth='col-12'
                                 component={FieldGroup}
                                 componentType='input'
-                                disabled={attr.isFieldDisabled}
+                                disabled={props.attr.isFieldDisabled}
                                 label='Genres'
                                 name='genres'
                                 placeholder='Enter genres'
@@ -114,7 +114,7 @@ const MovieForm = ({ attr, history, initValues, params, onSubmitHandler }) => {
                                 colWidth='col-12'
                                 component={FieldGroup}
                                 componentType='input'
-                                disabled={attr.isFieldDisabled}
+                                disabled={props.attr.isFieldDisabled}
                                 label='Languages'
                                 name='languages'
                                 placeholder='Enter languages'
@@ -126,7 +126,7 @@ const MovieForm = ({ attr, history, initValues, params, onSubmitHandler }) => {
                                 colWidth='col-12'
                                 component={FieldGroup}
                                 componentType='input'
-                                disabled={attr.isFieldDisabled}
+                                disabled={props.attr.isFieldDisabled}
                                 label='Image Url'
                                 name='imageUrl'
                                 placeholder='Enter image url'
@@ -138,7 +138,7 @@ const MovieForm = ({ attr, history, initValues, params, onSubmitHandler }) => {
                                 colWidth='col-12'
                                 component={FieldGroup}
                                 componentType='textarea'
-                                disabled={attr.isFieldDisabled}
+                                disabled={props.attr.isFieldDisabled}
                                 label='Synopsis'
                                 name='synopsis'
                                 placeholder='Enter synopsis'
@@ -147,24 +147,27 @@ const MovieForm = ({ attr, history, initValues, params, onSubmitHandler }) => {
                                 type='text'
                                 value={values.synopsis}
                             />
-                            <div className="btn-group d-flex" role="group">
+                            <div
+                                className="btn-group d-flex"
+                                role="group"
+                            >
                                 <button
-                                    onClick={history.goBack}
+                                    onClick={props.history.goBack}
                                     type="button"
                                     className="btn btn-outline-secondary w-100"
                                 >Cancel
                                 </button>
                                 <button
                                     type="submit"
-                                    className={'btn ' + attr.btnColor + ' w-100'}
+                                    className={'btn ' + props.attr.btnColor + ' w-100'}
                                     disabled={isSubmitting}
-                                >{attr.btnText}
+                                >{props.attr.btnText}
                                 </button>
                             </div>
                         </FormikForm>
                     </article>
                 </section>
-            }
+            )}
         />
     )
 }

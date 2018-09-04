@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 
-import withLoading from '../../helpers/withLoading'
+import withLoader from '../../helpers/withLoader'
 import moviesService from '../../services/movies-service'
 
 class AllPage extends React.Component {
@@ -78,8 +78,14 @@ class AllPage extends React.Component {
                                 m.title.toLowerCase().includes(this.state.filter.toLowerCase()))
                             .map(m => {
                                 return (
-                                    <article key={m._id} onClick={this.onClickArticle.bind(this, m._id)}>
-                                        <img src={m.imageUrl} alt="movie" />
+                                    <article
+                                        key={m._id}
+                                        onClick={this.onClickArticle.bind(this, m._id)}
+                                    >
+                                        <img
+                                            src={m.imageUrl}
+                                            alt="movie"
+                                        />
                                         <h6>{m.title} ({m.productionYear})</h6>
                                         <p>{m.genres && m.genres}</p>
                                     </article>
@@ -92,7 +98,10 @@ class AllPage extends React.Component {
                     <h4>{md.title} ({md.productionYear})</h4>
                     <article className="article-info">
                         <div className="div-poster">
-                            <img src={md.imageUrl} alt="movie" />
+                            <img
+                                src={md.imageUrl}
+                                alt="movie"
+                            />
                         </div>
                         <div className="div-info">
                             <div className="tbl-row">
@@ -151,9 +160,19 @@ class AllPage extends React.Component {
                     </article>
                     {this.props.isAuthenticated && (
                         <div className="btn-group d-flex">
-                            <Link to={'/movies/edit/' + md._id} className="btn btn-warning w-100" role="button">Edit</Link>
+                            <Link
+                                to={'/movies/edit/' + md._id}
+                                className="btn btn-warning w-100"
+                                role="button"
+                            >Edit
+                            </Link>
                             {this.props.isAdmin && (
-                                <Link to={'/movies/delete/' + md._id} className="btn btn-danger w-100" role="button">Delete</Link>
+                                <Link
+                                    to={'/movies/delete/' + md._id}
+                                    className="btn btn-danger w-100"
+                                    role="button"
+                                >Delete
+                                </Link>
                             )}
                         </div>
                     )}
@@ -171,4 +190,4 @@ const mapStateToProps = (state) => {
 }
 
 const request = () => moviesService.allGet()
-export default connect(mapStateToProps, null)(withRouter(withLoading(AllPage, request, { id: false })))
+export default connect(mapStateToProps, null)(withRouter(withLoader(AllPage, request, { id: false })))

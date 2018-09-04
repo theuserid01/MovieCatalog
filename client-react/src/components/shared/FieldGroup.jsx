@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Input = (props) => {
+const FieldGroup = (props) => {
     const Tag = props.componentType
     const field = props.field
     const form = props.form
@@ -40,4 +40,4 @@ const Input = (props) => {
     )
 }
 
-export default Input
+export default FieldGroup

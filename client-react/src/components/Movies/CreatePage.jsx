@@ -25,10 +25,9 @@ const CreatePage = (props) => {
     return (
         <MovieForm
             attr={attr}
-            history={props.history}
             initValues={data}
-            params={props.match.params}
             onSubmitHandler={onSubmitHandler}
+            {...props}
         />
     )
 }

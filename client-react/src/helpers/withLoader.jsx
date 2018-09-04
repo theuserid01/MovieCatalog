@@ -2,7 +2,7 @@ import React from 'react'
 
 import Spinner from '../components/shared/Spinner'
 
-const withLoading = (WrappedComponent, request, param) =>
+const withLoader = (WrappedComponent, request, param) =>
     class extends React.Component {
         constructor(props) {
             super(props)
@@ -50,4 +50,4 @@ const withLoading = (WrappedComponent, request, param) =>
         }
     }
 
-export default withLoading
+export default withLoader

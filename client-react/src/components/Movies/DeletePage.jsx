@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 
 import MovieForm from './_MovieForm'
-import withLoading from '../../helpers/withLoading'
+import withLoader from '../../helpers/withLoader'
 import moviesService from '../../services/movies-service'
 
 const attr = {
@@ -18,14 +18,13 @@ const DeletePage = (props) => {
     return (
         <MovieForm
             attr={attr}
-            history={props.history}
             initValues={props.data}
-            params={props.match.params}
             onSubmitHandler={onSubmitHandler}
+            {...props}
         />
     )
 }
 
 export default withRouter(
-    withLoading(DeletePage, getData, { id: true })
+    withLoader(DeletePage, getData, { id: true })
 )

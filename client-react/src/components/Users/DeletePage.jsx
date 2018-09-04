@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 
 import UserForm from './_UserForm'
-import withLoading from '../../helpers/withLoading'
+import withLoader from '../../helpers/withLoader'
 import usersService from '../../services/users-service'
 
 const attr = {
@@ -38,5 +38,5 @@ const DeletePage = (props) => {
 }
 
 export default withRouter(
-    withLoading(DeletePage, getData, { id: true })
+    withLoader(DeletePage, getData, { id: true })
 )
