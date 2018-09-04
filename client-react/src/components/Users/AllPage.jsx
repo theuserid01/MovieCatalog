@@ -86,7 +86,10 @@ class AllPage extends React.Component {
                 )}
                 {this.state.users.length > 0 && (
                     <article>
-                        <form className="col-4" onSubmit={this.onSubmitHandler}>
+                        <form
+                            className="col-4"
+                            onSubmit={this.onSubmitHandler}
+                        >
                             <div className="form-group">
                                 <div className="input-group">
                                     <input
@@ -158,7 +161,7 @@ class AllPage extends React.Component {
                         />
                     </article>
                 )}
-            </section >
+            </section>
         )
     }
 }

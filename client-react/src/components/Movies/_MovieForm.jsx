@@ -152,15 +152,13 @@ const MovieForm = ({ attr, history, initValues, params, onSubmitHandler }) => {
                                     onClick={history.goBack}
                                     type="button"
                                     className="btn btn-outline-secondary w-100"
-                                >
-                                    Cancel
+                                >Cancel
                                 </button>
                                 <button
                                     type="submit"
                                     className={'btn ' + attr.btnColor + ' w-100'}
                                     disabled={isSubmitting}
-                                >
-                                    {attr.btnText}
+                                >{attr.btnText}
                                 </button>
                             </div>
                         </FormikForm>

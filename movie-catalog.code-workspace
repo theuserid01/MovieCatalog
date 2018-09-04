@@ -20,9 +20,11 @@
             "formik",
             "haspopup",
             "keyframes",
+            "minlength",
             "signin",
             "signup",
-            "toastr"
+            "toastr",
+            "validators"
         ]
     }
 }

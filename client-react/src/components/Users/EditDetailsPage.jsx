@@ -9,49 +9,34 @@ const attr = {
     btnColor: 'btn-outline-primary',
     btnText: 'Save',
     isFieldDisabled: false,
-    isFieldsDetailsVisible: true,
-    isFieldsPasswordsVisible: false,
+    isFieldVisibleEmail: true,
+    isFieldVisiblePassword: false,
+    isFieldVisiblePasswordCurrent: false,
+    isFieldVisiblePasswordNew: false,
+    isFieldVisiblePasswordRepeat: false,
+    isFieldVisiblePasswordRepeatNew: false,
+    isFieldVisibleUsername: true,
     title: 'Edit Details'
 }
+const formModel = {
+    email: '',
+    username: ''
+}
+const getData = (id) => usersService.editDetailsGet(id)
+const onSubmitHandler = (id, data) => usersService.editDetailsPost(id, data)
 
-class EditDetailsPage extends React.Component {
-
-    onSubmitHandler = async (values, formikBag) => {
-        const id = this.props.match.params.id
-        const data = {
-            email: values.email,
-            username: values.username
-        }
-
-        try {
-            const res = await usersService.editDetailsPost(id, data)
-
-            if (!res.success) {
-                console.log(res.message)
-                formikBag.setErrors(res.errors)
-                formikBag.setSubmitting(false)
-                return
-            }
-
-            this.props.history.goBack()
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    render() {
-        return (
-            <UserForm
-                attr={attr}
-                history={this.props.history}
-                initValues={this.props.data}
-                onSubmit={this.onSubmitHandler}
-            />
-        )
-    }
+const EditDetailsPage = (props) => {
+    return (
+        <UserForm
+            attr={attr}
+            formModel={formModel}
+            initValues={props.data}
+            onSubmitHandler={onSubmitHandler}
+            {...props}
+        />
+    )
 }
 
-const request = (id) => usersService.editDetailsGet(id)
 export default withRouter(
-    withLoading(EditDetailsPage, request, { id: true })
+    withLoading(EditDetailsPage, getData, { id: true })
 )

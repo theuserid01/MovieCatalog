@@ -138,7 +138,8 @@ class EDitRolesPage extends React.Component {
                         <h5>Current roles: {
                             currentRoles.length > 0
                                 ? currentRoles.join(', ')
-                                : 'None'}
+                                : 'None'
+                        }
                         </h5>
                         <div className="form-row mt-4">
                             <div className="form-group col-5">
@@ -149,13 +150,22 @@ class EDitRolesPage extends React.Component {
                                     multiple
                                 >
                                     {this.state.availableRoles.map(role => {
-                                        return (<option key={role} value={role}>{role}</option>)
+                                        return (
+                                            <option
+                                                key={role}
+                                                value={role}
+                                            >{role}
+                                            </option>
+                                        )
                                     })}
                                 </select>
                             </div>
                             <div className="form-group col-2">
                                 <div className="text-center">
-                                    <div className="btn-group-vertical btn-group-xs" role="group">
+                                    <div
+                                        className="btn-group-vertical btn-group-xs"
+                                        role="group"
+                                    >
                                         <input
                                             onClick={this.onClickAllToRight}
                                             type="button"
@@ -195,7 +205,13 @@ class EDitRolesPage extends React.Component {
                                     multiple
                                 >
                                     {this.state.selectedRoles.map(role => {
-                                        return (<option key={role} value={role}>{role}</option>)
+                                        return (
+                                            <option
+                                                key={role}
+                                                value={role}
+                                            >{role}
+                                            </option>
+                                        )
                                     })}
                                 </select>
                             </div>
@@ -207,9 +223,22 @@ class EDitRolesPage extends React.Component {
                                 <small>* The selected roles in the right form will be saved and overwrite the current ones.</small>
                             </div>
                         </div>
-                        <div className="btn-group d-flex" role="group">
-                            <button type="button" onClick={this.props.history.goBack} className="btn btn-outline-secondary w-100">Cancel</button>
-                            <button type="submit" className="btn btn-outline-primary w-100" id="save-roles">Save</button>
+                        <div
+                            className="btn-group d-flex"
+                            role="group"
+                        >
+                            <button
+                                type="button"
+                                onClick={this.props.history.goBack}
+                                className="btn btn-outline-secondary w-100"
+                            >Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                className="btn btn-outline-primary w-100"
+                                id="save-roles"
+                            >Save
+                            </button>
                         </div>
                     </form>
                 </article>
