@@ -33,7 +33,8 @@ class App extends React.Component {
                 <main>
                     <Switch>
                         <Route
-                            exact path="/"
+                            exact
+                            path="/"
                             component={MoviesAllPage}
                         />
                         <Route

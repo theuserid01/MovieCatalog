@@ -58,16 +58,16 @@ module.exports.seedUsers = () => {
 
             for (let i = 1; i <= 60; i++) {
                 if (i > 1) {
-                    let index = i >= 10 ? i : `0${i}`
+                    const index = i >= 10 ? i : `0${i}`
                     email = `user${index}@gmail.com`
-                    firstName = `user${i}`
-                    lastName = `user${i}`
+                    firstName = `user${index}`
+                    lastName = `user${index}`
                     roles = []
-                    username = `user${i}`
+                    username = `user${index}`
                 }
 
-                let salt = encryption.generateSalt()
-                let hashedPass = encryption.generateHashedPassword(salt, 'Admin1')
+                const salt = encryption.generateSalt()
+                const hashedPass = encryption.generateHashedPassword(salt, 'Admin1')
 
                 User.create({
                     email: email,

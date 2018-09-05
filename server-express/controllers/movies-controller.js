@@ -139,7 +139,6 @@ module.exports = {
             errors.productionYear = 'Production year is required!'
         }
 
-
         if (Object.keys(errors).length) {
             return res.status(200).json({
                 errors: errors,

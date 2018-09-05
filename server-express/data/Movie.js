@@ -49,6 +49,7 @@ module.exports.seedMovies = () => {
             }
 
             for (let i = 1; i <= 10; i++) {
+                const index = i >= 10 ? i : `0${i}`
                 Movie.create({
                     colors: 'Color, Black and White',
                     countries: 'Australia, USA',
@@ -57,14 +58,8 @@ module.exports.seedMovies = () => {
                     languages: 'English, Russian',
                     synopsis: 'Very good movie.',
                     productionYear: 2015,
-                    title: `Mad Max: Fury Road-${pad(i, 2)}`
+                    title: `Mad Max: Fury Road-${index}`
                 })
             }
         })
-}
-
-function pad(num, size) {
-    let s = num + ''
-    while (s.length < size) s = '0' + s
-    return s
 }

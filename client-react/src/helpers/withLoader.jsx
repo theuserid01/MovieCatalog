@@ -46,7 +46,12 @@ const withLoader = (WrappedComponent, request, param) =>
                 return <Spinner />
             }
 
-            return <WrappedComponent data={this.state.data} {...this.props} />
+            return (
+                <WrappedComponent
+                    data={this.state.data}
+                    {...this.props}
+                />
+            )
         }
     }
 

@@ -1,5 +1,5 @@
 // Basic config
-const dbName = 'MyDb'
+const dbName = 'MovieCatalogProjectDefense'
 const connectionString = `mongodb://localhost:27017/${dbName}`
 const port = process.env.PORT || 5000
 

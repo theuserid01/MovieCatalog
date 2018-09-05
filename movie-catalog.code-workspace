@@ -20,6 +20,7 @@
             "formik",
             "haspopup",
             "keyframes",
+            "maxlength",
             "minlength",
             "signin",
             "signup",
