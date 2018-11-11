@@ -16,6 +16,7 @@
     "settings": {
         "cSpell.words": [
             "Injectable",
+            "browserslist",
             "describedby",
             "formik",
             "haspopup",
